@@ -592,5 +592,124 @@
   } else { $$(".reveal").forEach(function (el) { el.classList.add("in"); }); $$("[data-count]").forEach(function (c) { c.textContent = c.dataset.count; }); }
   window.addEventListener("scroll", function () { $("#topbar").classList.toggle("solid", window.scrollY > 40); }, { passive: true });
 
+  /* ---------- ผู้ช่วยตอบคำถาม (แชตบอต) ----------
+     เว็บส่งคำถามไปที่ Web app ของ Google Apps Script (SITE.chatbot.url) ซึ่งเก็บรหัส Gemini ไว้ฝั่งเซิร์ฟเวอร์
+     ในเว็บนี้จึงไม่มีรหัสใด ๆ ถ้า url ว่าง ปุ่มผู้ช่วยจะไม่แสดง */
+  var botN = 0;
+  /* สัญลักษณ์ผู้ช่วย: เฟือง (วิศวกรรม) วงเวียนเขียนแบบรูปตัว A (สถาปัตยกรรม) บนกระดาษกริดพิมพ์เขียว */
+  function botMark(cls) {
+    var id = "cbm" + (++botN), grid = "";
+    for (var g = 8; g < 64; g += 8) grid += '<path d="M' + g + ' 0V64M0 ' + g + 'H64"/>';
+    return '<svg class="cb-mark ' + (cls || "") + '" viewBox="0 0 64 64" aria-hidden="true" focusable="false">' +
+      '<defs><radialGradient id="' + id + '" cx="35%" cy="28%" r="80%"><stop offset="0" stop-color="#55318c"/><stop offset="1" stop-color="#170d29"/></radialGradient>' +
+      '<clipPath id="' + id + 'c"><circle cx="32" cy="32" r="31"/></clipPath></defs>' +
+      '<circle cx="32" cy="32" r="31" fill="url(#' + id + ')"/>' +
+      '<g clip-path="url(#' + id + 'c)" stroke="#b9a3dd" stroke-width=".45" opacity=".4">' + grid + "</g>" +
+      '<circle cx="32" cy="32" r="30.2" fill="none" stroke="#eab23b" stroke-width="1.2" opacity=".55"/>' +
+      '<g class="cb-gear"><path d="M26.07 13.74L28.76 13.08L29.55 9.13L34.45 9.13L35.24 13.08L37.93 13.74L40.5 14.78L43.46 12.06L47.43 14.94L45.75 18.6L47.53 20.71L49 23.07L52.99 22.6L54.51 27.27L51 29.23L51.2 32L51 34.77L54.51 36.73L52.99 41.4L49 40.93L47.53 43.29L45.75 45.4L47.43 49.06L43.46 51.94L40.5 49.22L37.93 50.26L35.24 50.92L34.45 54.87L29.55 54.87L28.76 50.92L26.07 50.26L23.5 49.22L20.54 51.94L16.57 49.06L18.25 45.4L16.47 43.29L15 40.93L11.01 41.4L9.49 36.73L13 34.77L12.8 32L13 29.23L9.49 27.27L11.01 22.6L15 23.07L16.47 20.71L18.25 18.6L16.57 14.94L20.54 12.06L23.5 14.78Z" fill="none" stroke="#eab23b" stroke-width="2.2" stroke-linejoin="round"/></g>' +
+      '<path d="M22.6 45.2Q32 51.4 41.4 45.2" fill="none" stroke="#f6d684" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="1.4 2.4"/>' +
+      '<g fill="none" stroke="#fff" stroke-linecap="round"><path d="M32 22.6L24.4 43.8M32 22.6L39.6 43.8" stroke-width="2.5"/><path d="M27.4 35.4Q32 37.6 36.6 35.4" stroke-width="1.6"/><path d="M32 14.8V18.6" stroke-width="2.6"/></g>' +
+      '<path d="M39.6 43.8L40.6 46.6" stroke="#eab23b" stroke-width="2.2" stroke-linecap="round"/><path d="M24.4 43.8L23.6 46.6" stroke="#d5cae6" stroke-width="1.1" stroke-linecap="round"/>' +
+      '<circle cx="32" cy="21" r="3" fill="#f6d684" stroke="#170d29" stroke-width="1"/></svg>';
+  }
+  (function () {
+    var BOT = SITE.chatbot || {};
+    if (!BOT.url || !window.fetch) return;
+    var NAME = BOT.name || "ผู้ช่วย ม.5/4", KEY = "m54-chat", busy = false, log = [];
+    var FAIL = "ขออภัยครับ ตอนนี้ติดต่อผู้ช่วยไม่ได้ ลองใหม่อีกครั้งในอีกสักครู่ หรือดูที่[บอร์ดข่าวสาร](#news)ได้เลยครับ";
+    var HELLO = "สวัสดีครับ ผมคือ" + NAME + " ถามเรื่องข่าว กำหนดส่ง ปฏิทิน เอกสาร หรือผลงานของเพื่อน ๆ ในห้องได้เลยครับ ผมตอบจากข้อมูลบนเว็บนี้เท่านั้น";
+    var mobile = window.matchMedia("(max-width:720px)");
+    /* ชื่อนักเรียนและวันที่ในคำตอบห้ามขาดกลางบรรทัด: ชื่อเต็มก่อน แล้วชื่อหรือนามสกุลเดี่ยว */
+    var names = STU.map(function (s) { return s.name; });
+    names = names.concat([].concat.apply([], names.map(function (n) { return n.split(" "); })).filter(function (w) { return w.length > 2; }));
+    var NAME_RE = new RegExp("(" + names.sort(function (a, b) { return b.length - a.length; }).join("|") + "|\\d{1,2} (?:" + MON.join("|").replace(/\./g, "\\.") + ") \\d{4})", "g");
+    function keepNames(h) { return h.replace(/(<[^>]*>)|([^<]+)/g, function (m, tag, text) { return tag || text.replace(NAME_RE, '<span class="nw">$1</span>'); }); }
+    try { log = JSON.parse(sessionStorage.getItem(KEY) || "[]"); if (!Array.isArray(log)) log = []; } catch (e) { log = []; }
+    function save() { try { sessionStorage.setItem(KEY, JSON.stringify(log.slice(-20))); } catch (e) {} }
+
+    var fab = document.createElement("button");
+    fab.className = "cb-fab"; fab.type = "button"; fab.setAttribute("aria-controls", "cbPanel"); fab.setAttribute("aria-expanded", "false");
+    fab.innerHTML = botMark() + "<span>ถาม" + esc(NAME) + "<small>ข่าว กิจกรรม และผลงานของห้อง</small></span>";
+    var box = document.createElement("section");
+    box.className = "cb-panel"; box.id = "cbPanel"; box.hidden = true; box.setAttribute("role", "dialog"); box.setAttribute("aria-label", NAME);
+    box.innerHTML = '<header class="cb-head">' + botMark() + '<div class="cb-title"><b>' + esc(NAME) + "</b><small>" + tx("แผนวิศวกรรมและสถาปัตยกรรม") + "</small><small>" + tx("ตอบจากข้อมูลบนเว็บนี้") + "</small></div>" +
+      '<button type="button" class="cb-tool" data-cb="reset">เริ่มใหม่</button><button type="button" class="cb-tool" data-cb="close">ปิด</button></header>' +
+      '<div class="cb-log" id="cbLog" aria-live="polite"></div>' +
+      '<form class="cb-form" id="cbForm"><textarea id="cbIn" rows="1" maxlength="500" placeholder="พิมพ์คำถามที่นี่" aria-label="พิมพ์คำถาม"></textarea><button type="submit" class="cb-send">ส่ง</button></form>' +
+      '<p class="cb-note">' + tx("ตอบโดย AI (Google Gemini) จากข้อมูลบนเว็บ อาจคลาดเคลื่อนได้ เรื่องสำคัญโปรดยืนยันกับครูที่ปรึกษา และอย่าพิมพ์ข้อมูลส่วนตัวในช่องคำถาม") + "</p>";
+    document.body.appendChild(fab); document.body.appendChild(box); document.body.classList.add("has-cb");
+    var logEl = $("#cbLog", box), input = $("#cbIn", box), sendBtn = $(".cb-send", box);
+
+    /* แปลงคำตอบเป็น HTML อย่างปลอดภัย: escape ก่อน แล้วรับเฉพาะ **ตัวหนา** รายการ "- " และลิงก์ในเว็บหรือ https */
+    function link(href, label) {
+      var raw = href.replace(/&amp;/g, "&"), n = raw.match(/^#n=([0-9a-z-]+)$/), s = raw.match(/^#s=(\d{1,2})$/);
+      if (n) { var it = ALL.filter(function (x) { return x.id === n[1]; })[0]; return it ? '<a class="cb-in" href="#n=' + it.id + '">' + (label || esc(it.title)) + "</a>" : label; }
+      if (s) { var st = stu(+s[1]); return st ? '<a class="cb-in" href="#s=' + pad2(st.no) + '" data-student="' + st.no + '">' + (label || esc(st.name)) + "</a>" : label; }
+      if (/^#[a-z]+$/.test(raw)) return document.getElementById(raw.slice(1)) ? '<a class="cb-in" href="' + raw + '">' + (label || raw) + "</a>" : label;
+      if (/^https:\/\/[^\s"<>]+$/.test(raw)) return '<a href="' + esc(raw) + '" target="_blank" rel="noopener">' + (label || esc(raw)) + "</a>";
+      return label;
+    }
+    function inline(h) {
+      return h.replace(/\[([^\]\n]+)\]\(([^)\s]+)\)|\*\*([^*\n]+)\*\*|(https:\/\/[^\s<]+[^\s<.,;:)'"])|(#(?:n=[0-9a-z-]+|s=\d{1,2}))(?![\w-])/g,
+        function (m, label, href, bold, url, bare) {
+          if (label) return link(href, label);
+          if (bold) return "<b>" + inline(bold) + "</b>";
+          return link(url || bare, "");
+        });
+    }
+    function md(text) {
+      var out = "", list = false;
+      esc(text).split(/\n/).forEach(function (line) {
+        var li = line.match(/^\s*[-*•]\s+(.*)$/);
+        if (li) { if (!list) { out += "<ul>"; list = true; } out += "<li>" + inline(li[1]) + "</li>"; return; }
+        if (list) { out += "</ul>"; list = false; }
+        if (line.trim()) out += "<p>" + inline(line.trim()) + "</p>";
+      });
+      return protect(keepNames(out + (list ? "</ul>" : "")));
+    }
+    function draw() {
+      var h = '<div class="cb-msg bot">' + md(HELLO) + "</div>";
+      if (!log.length) h += '<div class="cb-chips">' + (BOT.suggest || []).map(function (q) { return '<button type="button" data-q="' + esc(q) + '">' + tx(q) + "</button>"; }).join("") + "</div>";
+      log.forEach(function (m) { h += '<div class="cb-msg ' + (m.role === "user" ? "me" : "bot") + (m.fail && m.role !== "user" ? " err" : "") + '">' + (m.role === "user" ? "<p>" + tx(m.text) + "</p>" : md(m.text)) + "</div>"; });
+      if (busy) h += '<div class="cb-msg bot cb-wait"><span>' + tx("กำลังค้นข้อมูลบนเว็บ") + '</span><i></i><i></i><i></i></div>';
+      logEl.innerHTML = h; logEl.scrollTop = logEl.scrollHeight;
+    }
+    function setBusy(b) { busy = b; box.classList.toggle("cb-busy", b); sendBtn.disabled = b; draw(); }
+    function ask(q) {
+      q = String(q || "").replace(/\s+/g, " ").trim().slice(0, 500);
+      if (!q || busy) return;
+      /* ส่งเฉพาะบทสนทนาที่ตอบสำเร็จ 6 ข้อความล่าสุด เพื่อให้ถามต่อเนื่องได้ */
+      var hist = log.filter(function (m) { return !m.fail; }).slice(-6).map(function (m) { return { role: m.role, text: m.text }; });
+      var me = { role: "user", text: q }; log.push(me); input.value = ""; grow(); setBusy(true);
+      var ctl = window.AbortController ? new AbortController() : null, timer = setTimeout(function () { if (ctl) ctl.abort(); }, 45000);
+      fetch(BOT.url, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify({ q: q, history: hist }), signal: ctl ? ctl.signal : undefined })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { answer(d && typeof d.answer === "string" && d.answer.trim() ? d.answer : (d && d.message) || FAIL, !(d && d.answer), me); })
+        .catch(function () { answer(FAIL, true, me); })
+        .then(function () { clearTimeout(timer); setBusy(false); if (!mobile.matches) input.focus(); });
+    }
+    function answer(text, fail, me) { if (fail) me.fail = true; log.push({ role: "model", text: String(text).slice(0, 4000), fail: fail || undefined }); save(); }
+    function grow() { input.style.height = "auto"; input.style.height = Math.min(input.scrollHeight, 120) + "px"; }
+    function open(on) {
+      box.hidden = !on; fab.hidden = on; fab.setAttribute("aria-expanded", String(on));
+      if (on) { draw(); setTimeout(function () { if (!mobile.matches) input.focus(); }, 50); } else fab.focus({ preventScroll: true });
+    }
+
+    fab.addEventListener("click", function () { open(true); });
+    box.addEventListener("click", function (e) {
+      var c = e.target.closest("[data-cb]");
+      if (c && c.dataset.cb === "close") return open(false);
+      if (c && c.dataset.cb === "reset") { if (busy) return; log = []; save(); draw(); return input.focus(); }
+      var q = e.target.closest("[data-q]"); if (q) return ask(q.dataset.q);
+      /* มือถือ: ปิดหน้าต่างแชตก่อน เพื่อให้เห็นข่าวหรือแฟ้มผลงานที่เปิด (บทสนทนายังอยู่) */
+      if (e.target.closest("a.cb-in") && mobile.matches) open(false);
+    });
+    $("#cbForm", box).addEventListener("submit", function (e) { e.preventDefault(); ask(input.value); });
+    input.addEventListener("input", grow);
+    input.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); ask(input.value); } });
+    /* ดักก่อนตัวปิดข่าว (capture) เพื่อให้ Esc ปิดข่าวที่เปิดทับอยู่ก่อน แล้วค่อยปิดแชตในครั้งถัดไป */
+    window.addEventListener("keydown", function (e) { if (e.key === "Escape" && !box.hidden && $("#modal").hidden) open(false); }, true);
+  })();
+
   renderUrgent(); renderTodo(); renderBoard(); renderCal(); renderMembers(); fromHash();
 })();

@@ -155,6 +155,25 @@ else {
   }
 })(ROOT);
 
+/* ---------- 1.6) ผู้ช่วยตอบคำถาม (แชตบอต) ----------
+   คลังความรู้ต้องสร้างใหม่ทุกครั้งที่ข้อมูลเว็บเปลี่ยน และห้ามมีรหัส API ในไฟล์ใดของเว็บ */
+const BOT = SITE.chatbot || {};
+if (BOT.url && !/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(BOT.url)) err("site.js chatbot.url ต้องเป็นลิงก์ Web app ของ Apps Script แบบ https://script.google.com/macros/s/.../exec");
+try {
+  const kb = require("./build-knowledge.js");
+  if (!fs.existsSync(kb.OUT)) err("ยังไม่มี data/knowledge.txt ให้รัน node tools/build-knowledge.js");
+  else if (fs.readFileSync(kb.OUT, "utf8") !== kb.build()) err("data/knowledge.txt ไม่ตรงกับข้อมูลเว็บล่าสุด ให้รัน node tools/build-knowledge.js แล้วตรวจใหม่");
+} catch (e) { err("สร้างคลังความรู้ของผู้ช่วยไม่ได้: " + e.message); }
+(function scanKeys(dir) {
+  for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (f.name === ".git" || f.name === "node_modules") continue;
+    const p = path.join(dir, f.name);
+    if (f.isDirectory()) scanKeys(p);
+    else if (/\.(js|gs|html|md|json|txt|csv|css)$/i.test(f.name) && /AIza[0-9A-Za-z_-]{35}/.test(fs.readFileSync(p, "utf8")))
+      err(`พบสิ่งที่คล้ายรหัส API ของ Google ใน ${path.relative(ROOT, p)} ห้ามเผยแพร่ ลบออกก่อน แล้วเปลี่ยนรหัสใหม่ที่ Google AI Studio`);
+  }
+})(ROOT);
+
 /* ---------- 2) สแกนข้อมูลส่วนบุคคล ---------- */
 const RULES = [
   [/(?<![\d/])0[689]\d[- ]?\d{3}[- ]?\d{4}(?!\d)/g, "เบอร์มือถือ"],
@@ -169,8 +188,9 @@ const RULES = [
 /* ข้อความที่ตรงรูปแบบแต่ไม่ใช่ข้อมูลส่วนบุคคล เช่น ปีการศึกษา หรือเลขสถิติ */
 const ALLOW = [/^2\d{4}$/];
 const SKIP_DIRS = new Set([".git", "archive", "img", "node_modules", "tools"]);
-/* app.js เป็นโค้ด ส่วนคู่มือพูดถึงกฎเรื่องข้อมูลส่วนบุคคลจึงมีคำต้องห้ามอยู่แล้ว */
-const SKIP_FILES = new Set(["app.js", "README.md", "UPDATE_GUIDE.md"]);
+/* app.js เป็นโค้ด ส่วนคู่มือพูดถึงกฎเรื่องข้อมูลส่วนบุคคลจึงมีคำต้องห้ามอยู่แล้ว
+   knowledge.txt สร้างจากไฟล์ข้อมูลที่สแกนแล้ว จึงไม่สแกนซ้ำ */
+const SKIP_FILES = new Set(["app.js", "README.md", "UPDATE_GUIDE.md", "knowledge.txt"]);
 function walk(dir, out) {
   for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
     if (f.name.startsWith(".") && f.name !== ".nojekyll") continue;
@@ -217,6 +237,7 @@ console.log(`สิ่งที่ต้องทำที่ยังแสด�
 const drafts = NEWS.filter((n) => n.draft);
 if (drafts.length) console.log(`ข่าวร่าง (ยังไม่แสดง) ${drafts.length}` + drafts.map((n) => `\n  - ${n.id}`).join(""));
 console.log(`site.js updated: ${SITE.updated}  รอประกาศ: ${(SITE.pending || []).length} เรื่อง`);
+console.log(`ผู้ช่วยตอบคำถาม: ${BOT.url ? "เปิดใช้ " + BOT.url : "ซ่อนอยู่ (ยังไม่ใส่ chatbot.url)"}`);
 if (STU.length) {
   const noPhoto = STU.filter((s) => !s.photo).map((s) => s.no);
   console.log(`สมาชิก ${STU.length} คน  มีรูป ${STU.length - noPhoto.length}` + (noPhoto.length ? ` (ยังไม่มีรูป เลขที่ ${noPhoto.join(", ")})` : "") +
