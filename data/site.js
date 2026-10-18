@@ -98,7 +98,7 @@ window.M54_SITE = {
      ห้ามใส่รหัส API ของ Gemini ในไฟล์นี้หรือไฟล์ใดของเว็บเด็ดขาด รหัสเก็บไว้ใน Script Properties ของ Apps Script เท่านั้น
      suggest: คำถามตัวอย่างที่ให้กดถามได้ทันที (ควรเป็นเรื่องที่มีคำตอบบนเว็บ) */
   chatbot: {
-    url: "",
+    url: "https://script.google.com/macros/s/AKfycbzWe80cuFVVoM8UdB_R16xlh_k6kUlrG3Vx5CoofHkNVnyT24BAQVnrUZY4-Ex4oJDu5Q/exec",
     name: "ผู้ช่วย ม.5/4",
     suggest: [
       "ช่วงนี้มีอะไรที่ต้องทำหรือต้องเตรียมบ้าง",
