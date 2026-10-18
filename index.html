@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ม.5/4 ศูนย์ข่าวสาร | โรงเรียนพรตพิทยพยัต</title>
+<meta name="description" content="พื้นที่กลางของห้อง ม.5/4 โรงเรียนพรตพิทยพยัต ปีการศึกษา 2569 รวมข่าวสาร สิ่งที่ต้องทำ ปฏิทิน ตารางเรียน เอกสาร และความทรงจำของห้อง สำหรับนักเรียนและผู้ปกครอง">
+<meta name="theme-color" content="#24143d">
+<meta property="og:title" content="ม.5/4 ศูนย์ข่าวสาร · โรงเรียนพรตพิทยพยัต">
+<meta property="og:description" content="ข่าวสาร สิ่งที่ต้องทำ ปฏิทิน ตารางเรียน และคลังภาพของห้อง ม.5/4 ปีการศึกษา 2569">
+<meta property="og:image" content="archive/1-2569/a08_h.jpg">
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip" href="#news">ข้ามไปที่บอร์ดข่าวสาร</a>
+
+<div id="alertbar" class="alertbar" hidden></div>
+
+<header class="topbar" id="topbar">
+  <a class="brand" href="#home" aria-label="หน้าแรก">
+    <img src="img/logo-sm.png" alt="ตราโรงเรียนพรตพิทยพยัต" width="36" height="44">
+    <span class="brand-text"><b>ม.5/4</b><small>ศูนย์ข่าวสาร · พรตพิทยพยัต</small></span>
+  </a>
+  <nav class="topnav" aria-label="เมนูหลัก">
+    <a href="#now">ต้องรู้ตอนนี้</a>
+    <a href="#news">บอร์ดข่าวสาร</a>
+    <a href="#calendar">ปฏิทิน</a>
+    <a href="#timetable">ตารางเรียน</a>
+    <a href="#docs">เอกสาร</a>
+    <a href="#parents">ผู้ปกครอง</a>
+    <a href="#members">สมาชิกห้อง</a>
+    <a href="#memories">ความทรงจำ 1/2569</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="home">
+  <div class="hero-wall" aria-hidden="true">
+    <div class="wall-row" data-row="0"></div>
+    <div class="wall-row rev" data-row="1"></div>
+    <div class="wall-row" data-row="2"></div>
+  </div>
+  <div class="hero-shade" aria-hidden="true"></div>
+  <div class="orb o1" aria-hidden="true"></div>
+  <div class="orb o2" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <div class="crest">
+      <span class="ring" aria-hidden="true"></span>
+      <img src="img/logo.png" alt="ตราโรงเรียนพรตพิทยพยัต" width="120" height="146">
+    </div>
+    <p class="eyebrow">โรงเรียนพรตพิทยพยัต · ปีการศึกษา 2569</p>
+    <h1 class="hero-title"><span class="shine">ม.5/4</span></h1>
+    <p class="hero-sub">พื้นที่กลางของห้องเรา สำหรับ<span class="rotator" id="rotator" aria-live="polite">ข่าวสาร</span></p>
+    <p class="hero-lead">ทุกประกาศจากกลุ่ม LINE จะถูกเก็บไว้ที่นี่เป็นหมวดหมู่ ค้นย้อนหลังได้ เห็นชัดว่าเรื่องไหนด่วน และต้องทำอะไรเมื่อไร</p>
+    <div class="hero-cta">
+      <a class="btn gold" href="#now">ดูสิ่งที่ต้องรู้ตอนนี้</a>
+      <a class="btn ghost" href="#news">เปิดบอร์ดข่าวสาร</a>
+    </div>
+    <div class="countdown" id="countdown" hidden></div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span></span></div>
+</section>
+
+<div class="ticker" id="ticker" aria-label="หัวข้อข่าวล่าสุด"><div class="ticker-track" id="tickerTrack"></div></div>
+
+<!-- ============ NOW ============ -->
+<section class="sec now" id="now">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">ต้องรู้ตอนนี้</p>
+      <h2>ข่าวด่วนและสิ่งที่ต้องทำ</h2>
+      <p class="sec-desc">เรื่องที่ต้องรีบอ่านอยู่ด้านซ้าย สิ่งที่นักเรียนหรือผู้ปกครองต้องทำพร้อมกำหนดส่งอยู่ด้านขวา</p>
+    </div>
+    <div class="now-grid">
+      <div class="panel urgent-panel reveal">
+        <div class="panel-head"><h3>ข่าวด่วน</h3><span class="pulse-dot" aria-hidden="true"></span></div>
+        <div id="urgentList" class="urgent-list"></div>
+      </div>
+      <div class="panel todo-panel reveal">
+        <div class="panel-head">
+          <h3>สิ่งที่ต้องทำ</h3>
+          <div class="seg" role="tablist" aria-label="เลือกผู้ทำ" id="todoSeg">
+            <button role="tab" aria-selected="true" data-who="all">ทั้งหมด</button>
+            <button role="tab" aria-selected="false" data-who="student">นักเรียน</button>
+            <button role="tab" aria-selected="false" data-who="parent">ผู้ปกครอง</button>
+          </div>
+        </div>
+        <ol id="todoList" class="todo-list"></ol>
+      </div>
+    </div>
+    <div class="pending reveal" id="pendingBox">
+      <h3>รอประกาศจากโรงเรียน</h3>
+      <p class="muted">ข้อมูลเหล่านี้ยังไม่ประกาศอย่างเป็นทางการ ครูจะแจ้งในกลุ่ม LINE และอัปเดตที่นี่ทันทีที่ได้รับ</p>
+      <ul id="pendingList" class="pending-list"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWS BOARD ============ -->
+<section class="sec board" id="news">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">บอร์ดข่าวสาร</p>
+      <h2>ทุกประกาศ แยกเป็นหมวดหมู่</h2>
+      <p class="sec-desc">เลือกหมวด ค้นหาคำ หรือกดที่ข่าวเพื่ออ่านฉบับเต็ม คัดลอกลิงก์ข่าวไปส่งต่อใน LINE ได้</p>
+    </div>
+
+    <div class="board-tools reveal">
+      <div class="seg term-seg" role="tablist" aria-label="ภาคเรียน" id="termSeg"></div>
+      <div class="seg" role="tablist" aria-label="ผู้อ่าน" id="whoSeg">
+        <button role="tab" aria-selected="true" data-who="all">ทุกคน</button>
+        <button role="tab" aria-selected="false" data-who="student">นักเรียน</button>
+        <button role="tab" aria-selected="false" data-who="parent">ผู้ปกครอง</button>
+      </div>
+      <label class="search">
+        <span class="sr">ค้นหาข่าว</span>
+        <input type="search" id="q" placeholder="ค้นหา เช่น สอบ ชุดพละ ค่าเทอม" autocomplete="off">
+      </label>
+    </div>
+    <div class="chips reveal" id="chips" role="tablist" aria-label="หมวดหมู่"></div>
+
+    <div class="news-grid" id="newsGrid"></div>
+    <div class="board-foot">
+      <p class="muted" id="newsCount"></p>
+      <button class="btn line" id="moreBtn" hidden>ดูข่าวเพิ่มเติม</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CALENDAR ============ -->
+<section class="sec cal" id="calendar">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">ปฏิทิน</p>
+      <h2>กิจกรรมและวันสำคัญของห้องเรา</h2>
+      <p class="sec-desc">แสดงเฉพาะวันที่ครูแจ้งแล้วหรือโรงเรียนประกาศแล้ว กดที่กิจกรรมเพื่ออ่านรายละเอียด</p>
+    </div>
+    <div class="cal-grid reveal">
+      <div class="cal-box">
+        <div class="cal-nav">
+          <button class="icon-btn" id="calPrev" aria-label="เดือนก่อนหน้า">ก่อนหน้า</button>
+          <h3 id="calTitle"></h3>
+          <button class="icon-btn" id="calNext" aria-label="เดือนถัดไป">ถัดไป</button>
+        </div>
+        <div class="cal-week" aria-hidden="true"><span>อา</span><span>จ</span><span>อ</span><span>พ</span><span>พฤ</span><span>ศ</span><span>ส</span></div>
+        <div class="cal-days" id="calDays"></div>
+      </div>
+      <div class="upcoming">
+        <h3>กำลังจะมาถึง</h3>
+        <ol id="upcoming" class="up-list"></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIMETABLE ============ -->
+<section class="sec tt" id="timetable">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">ตารางเรียน</p>
+      <h2>ตารางเรียนและ<span class="nw">การแต่งกาย</span> <span class="nw">ภาคเรียนที่ 2/2569</span></h2>
+    </div>
+    <div id="ttBox" class="reveal"></div>
+    <div id="dressBox" class="reveal"></div>
+  </div>
+</section>
+
+<!-- ============ DOCS ============ -->
+<section class="sec docs" id="docs">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">เอกสารและบริการ</p>
+      <h2>ลิงก์ เอกสาร และแบบฟอร์มที่ใช้บ่อย</h2>
+    </div>
+    <div id="docGroups" class="doc-groups"></div>
+  </div>
+</section>
+
+<!-- ============ PARENTS ============ -->
+<section class="sec parents" id="parents">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">สำหรับผู้ปกครอง</p>
+      <h2>คำถามที่พบบ่อย</h2>
+      <p class="sec-desc">ถ้าไม่พบคำตอบ สอบถามครูที่ปรึกษาในกลุ่ม LINE ผู้ปกครองหรือ LINE ส่วนตัวได้เสมอ</p>
+    </div>
+    <div class="faq" id="faq"></div>
+    <div class="follow reveal">
+      <div>
+        <h3>ติดตามข่าวของห้องอย่างไร</h3>
+        <ol class="steps">
+          <li><b>กลุ่ม LINE</b> ยังเป็นช่องทางแจ้งข่าวหลักและแจ้งลาเหมือนเดิม</li>
+          <li><b>เว็บนี้</b> เก็บทุกประกาศไว้เป็นหมวดหมู่ เปิดย้อนดูได้ตลอด</li>
+          <li><b>บันทึกเว็บไว้ที่หน้าจอโทรศัพท์</b> เปิดเว็บด้วยเบราว์เซอร์ แล้วเลือก "เพิ่มไปยังหน้าจอโฮม"</li>
+        </ol>
+      </div>
+      <p class="privacy">เว็บนี้เป็นเว็บสาธารณะ จึงไม่มีข้อมูลส่วนบุคคลของนักเรียน เช่น ผลการเรียนรายคน เบอร์โทรศัพท์ ที่อยู่ หรือข้อมูลครอบครัว เรื่องเฉพาะบุคคลครูจะติดต่อทาง LINE ส่วนตัว</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROOM ============ -->
+<section class="sec room" id="room">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">ห้องของเรา</p>
+      <h2>ม.5/4 <span class="nw">แผนการเรียน</span><span class="nw">วิศวกรรมและสถาปัตยกรรม</span></h2>
+    </div>
+    <div class="room-grid">
+      <div class="teachers reveal" id="teachers"></div>
+      <div class="room-facts reveal" id="roomFacts"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEMBERS ============ -->
+<section class="sec members" id="members">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">สมาชิกห้อง</p>
+      <h2>ม.5/4 ทั้ง 40 คน</h2>
+      <p class="sec-desc">กดที่รูปเพื่อเปิดแฟ้มผลงานของแต่ละคน รวมตำแหน่ง รางวัล งานที่ทำเพื่อส่วนรวม และโครงงาน IS ที่ภาคภูมิใจ เลือกชื่อโครงงานด้านล่างเพื่อดูสมาชิกแต่ละกลุ่ม</p>
+    </div>
+    <div class="mem-tools reveal">
+      <div class="chips" id="memChips" role="tablist" aria-label="กลุ่มโครงงาน IS"></div>
+      <label class="search mem-search">
+        <span class="sr">ค้นหาชื่อนักเรียน</span>
+        <input type="search" id="memQ" placeholder="ค้นหาชื่อหรือเลขที่" autocomplete="off">
+      </label>
+    </div>
+    <div class="mem-board" id="memBoard"></div>
+  </div>
+</section>
+
+<!-- ============ MEMORIES 1/2569 ============ -->
+<section class="sec memories" id="memories">
+  <div class="wrap">
+    <div class="sec-head light reveal">
+      <p class="kicker">ความทรงจำ ภาคเรียนที่ 1/2569</p>
+      <h2>11 กิจกรรมที่เราทำด้วยกัน</h2>
+      <p class="sec-desc">ภาพจากอัลบั้มของห้อง เลื่อนดูได้ กดเพื่อเปิดอัลบั้มเต็มใน Google Drive</p>
+    </div>
+    <div class="stats reveal" id="stats"></div>
+  </div>
+  <div class="reel-wrap reveal">
+    <div class="reel" id="reel" tabindex="0" aria-label="กิจกรรมภาคเรียนที่ 1/2569"></div>
+    <div class="reel-ctrl">
+      <button class="icon-btn light" id="reelPrev" aria-label="เลื่อนซ้าย">ก่อนหน้า</button>
+      <button class="icon-btn light" id="reelNext" aria-label="เลื่อนขวา">ถัดไป</button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="media-trio reveal" id="media"></div>
+    <div class="pride reveal">
+      <h3>ความภาคภูมิใจของห้องเรา</h3>
+      <ul id="prideList" class="pride-list"></ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap foot-in">
+    <img src="img/logo-sm.png" alt="" width="40" height="49">
+    <div>
+      <p><b>ครูที่ปรึกษาชั้น ม.5/4</b> โรงเรียนพรตพิทยพยัต สพม.กท.2</p>
+      <p class="muted" id="updated"></p>
+    </div>
+    <a class="btn ghost small" href="#home">กลับขึ้นด้านบน</a>
+  </div>
+</footer>
+
+<nav class="bottomnav" aria-label="เมนูลัด">
+  <a href="#home">หน้าแรก</a>
+  <a href="#now">ต้องทำ</a>
+  <a href="#news">ข่าว</a>
+  <a href="#calendar">ปฏิทิน</a>
+  <a href="#timetable">ตาราง</a>
+  <a href="#members">สมาชิก</a>
+</nav>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-back" data-close></div>
+  <article class="modal-card" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <button class="modal-x" data-close aria-label="ปิด">ปิด</button>
+    <div id="mBody"></div>
+  </article>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="data/site.js"></script>
+<script src="data/news-2-2569.js"></script>
+<script src="data/news-1-2569.js"></script>
+<script src="data/members.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
