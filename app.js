@@ -397,13 +397,20 @@
       /* กันตัดคำไทยกลางคำ: แต่ละคำ/ช่องข้อมูลห้ามขึ้นบรรทัดใหม่ตรงกลาง */
       var nwName = function (s) { return String(s || "").split(" ").map(function (w) { return '<span class="nw">' + esc(w).replace(/^(คณิตศาสตร์|วิทยาศาสตร์|ฟิสิกส์|กิจกรรม|ประชุม|ภาษา)(?=.)/, '$1</span><wbr><span class="nw">') + "</span>"; }).join(" "); };
       var nwInfo = function (arr) { return arr.filter(Boolean).map(function (w) { return '<span class="nw">' + esc(w) + "</span>"; }).join(" · "); };
+      /* รูปครูประจำวิชา (ไม่มีรูป = อักษรแรกของชื่อ) */
+      var TIMG = {}; (tt.teachers || []).forEach(function (t) { TIMG[t.name] = t.img; });
+      var tav = function (n, cls) {
+        var im = TIMG[n], ini = String(n || "").replace(/^ครู\s*/, "").charAt(0);
+        return im ? '<span class="' + cls + '"><img src="' + esc(im) + '" alt="" loading="lazy"></span>' : '<span class="' + cls + ' tt-ini" aria-hidden="true">' + esc(ini) + "</span>";
+      };
+      var who = function (n) { return n ? '<span class="tt-who">' + tav(n, "tt-av") + "<i>" + nwName(n) + "</i></span>" : ""; };
       var head = "<tr><th>วัน</th>" + tt.periods.map(function (p) { return "<th>คาบ " + p.n + "<br><small>" + esc(p.time || "") + "</small></th>"; }).join("") + "</tr>";
       var rows = order.map(function (d) {
         var cells = (tt.days[d] || []), cols = "", p = 1;
         tt.periods.forEach(function () {});
         while (p <= tt.periods.length) {
           var c = cells.filter(function (x) { return x.p === p; })[0];
-          if (c) { var sp = c.span || 1; cols += '<td colspan="' + sp + '"' + (c.code ? "" : ' class="plain"') + "><b>" + nwName(c.name) + "</b><small>" + nwInfo([c.code, c.teacher, c.room]) + "</small></td>"; p += sp; }
+          if (c) { var sp = c.span || 1; cols += '<td colspan="' + sp + '"' + (c.code ? "" : ' class="plain"') + "><b>" + nwName(c.name) + "</b><small>" + nwInfo([c.code, c.room]) + "</small>" + who(c.teacher) + "</td>"; p += sp; }
           else { cols += "<td></td>"; p++; }
         }
         return '<tr class="' + (d === wd ? "today" : "") + '"><th>' + d + "</th>" + cols + "</tr>";
@@ -418,11 +425,14 @@
         return '<ol class="tt-list" data-ttlist="' + d + '"' + (d === cur ? "" : " hidden") + ">" + list.map(function (c) {
           var sp = c.span || 1, last = c.p + sp - 1;
           return '<li class="' + (c.code ? "" : "plain") + '"><span class="tt-p">คาบ ' + c.p + (sp > 1 ? "–" + last : "") + "<small>" + esc(pt(c.p, 0) + "–" + pt(last, 1)) + "</small></span><div><b>" + nwName(c.name) + "</b>" +
-            (c.code || c.teacher || c.room ? "<small>" + nwInfo([c.code, c.teacher, c.room ? "ห้อง " + c.room : ""]) + "</small>" : "") + "</div></li>";
+            (c.code || c.room ? "<small>" + nwInfo([c.code, c.room ? "ห้อง " + c.room : ""]) + "</small>" : "") + who(c.teacher) + "</div></li>";
         }).join("") + "</ol>";
       }).join("") + "</div>";
       box.innerHTML = (tt.note ? '<p class="muted">' + esc(tt.note) + "</p>" : "") + '<div class="tt-scroll"><table class="tt-table">' + head + rows + "</table></div>" + mob +
-        (tt.image ? '<p><a class="btn line small" href="' + esc(tt.image) + '" target="_blank" rel="noopener">ดูภาพตารางเรียนต้นฉบับ</a></p>' : "");
+        ((tt.teachers || []).length ? '<div class="tt-teach"><h3>ครูประจำวิชา ภาคเรียนที่ ' + esc(SITE.term) + '</h3><div class="tt-tg">' + tt.teachers.map(function (t) {
+          return '<div class="tt-tc">' + tav(t.name, "tt-big") + "<b>" + nwName(t.name) + "</b><span>" + nwName(t.subj) + "</span></div>";
+        }).join("") + "</div></div>" : "") +
+        '<p class="tt-btns">' + (tt.imageTeachers ? '<a class="btn gold small" href="' + esc(tt.imageTeachers) + '" target="_blank" rel="noopener">ภาพตารางเรียนแบบมีรูปครู</a> ' : "") + (tt.image ? '<a class="btn line small" href="' + esc(tt.image) + '" target="_blank" rel="noopener">ภาพตารางเรียนต้นฉบับ</a>' : "") + "</p>";
     }
     box.addEventListener("click", function (e) {
       var b = e.target.closest("[data-ttday]"); if (!b) return;

@@ -241,6 +241,21 @@ span.nw{display:inline!important;font-size:inherit!important;font-weight:inherit
 .tt-table tr.today td{border-color:var(--gold);background:#fffaf0}
 .tt-scroll{overflow-x:auto}
 .tt-m{display:none}
+.tt-who{display:flex;align-items:center;gap:7px;margin-top:8px;padding-top:7px;border-top:1px dashed var(--line);font-family:var(--head);font-size:13px;color:var(--p700);line-height:1.25}
+.tt-who i{font-style:normal}
+.tt-av,.tt-big{flex:none;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;overflow:hidden;background:var(--p100);color:var(--p700);font-family:var(--head);font-weight:600;border:2px solid var(--gold)}
+.tt-av{width:34px;height:34px;font-size:15px}
+.tt-av img,.tt-big img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.tt-list .tt-who{margin-top:6px}
+.tt-teach{margin:22px 0 14px;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px 20px 22px}
+.tt-teach h3{font-family:var(--head);font-weight:600;color:var(--p900);font-size:19px;margin-bottom:16px}
+.tt-tg{display:grid;grid-template-columns:repeat(8,1fr);gap:18px 10px}
+.tt-tc{text-align:center}
+.tt-big{width:84px;height:84px;font-size:30px;margin:0 auto 8px;border-width:3px;box-shadow:0 0 0 4px var(--p100)}
+.tt-tc b{display:block;font-family:var(--head);font-weight:600;font-size:14.5px;color:var(--ink);line-height:1.3}
+.tt-tc > span:not(.tt-big){display:block;font-size:12.5px;color:var(--muted);line-height:1.35;margin-top:2px}
+@media (max-width:1000px){.tt-tg{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:520px){.tt-tg{grid-template-columns:repeat(3,1fr)}.tt-big{width:72px;height:72px;font-size:26px}}
 .tt-m .tt-days{gap:6px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px}
 .tt-m .tt-days .chip{padding:6px 12px;font-size:14px}
 .tt-days .chip.is-today{box-shadow:inset 0 -3px 0 var(--gold)}
@@ -653,3 +668,9 @@ span.nw{display:inline!important;font-size:inherit!important;font-weight:inherit
 @media print{
   .topbar,.bottomnav,.hero,.ticker,.footer{display:none}
 }
+/* ตารางเรียนแบบมีรูปครู: ให้พอดีจอคอม 1280 px */
+.tt-table{border-spacing:4px}
+.tt-table td{padding:7px 7px}
+.tt-table .tt-who{font-size:12.5px;gap:5px}
+.tt-table .tt-av{width:28px;height:28px;font-size:13px}
+.tt-btns{display:flex;flex-wrap:wrap;gap:10px}

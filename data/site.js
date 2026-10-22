@@ -40,6 +40,26 @@ window.M54_SITE = {
   timetable: {
     note: "ใช้ตั้งแต่วันจันทร์ที่ 26 ต.ค. 2569 · โฮมรูม 07.30–08.30 น. ทุกวัน · คาบละ 50 นาที พักกลางวันคาบ 5 (11.50–12.40 น.)",
     image: "docs/2569/timetable-2-2569.jpg",
+    imageTeachers: "docs/2569/timetable-2-2569-teachers.jpg",   // ภาพตารางเรียนแบบมีรูปครู (ทำโดยครูที่ปรึกษา)
+    /* ครูประจำวิชา: name ต้องตรงกับ teacher ในแต่ละคาบ · img ว่าง = แสดงอักษรแรกแทนรูป (รูปเก็บที่ img/t/) */
+    teachers: [
+      { name: "ครูนพพล", subj: "ฟิสิกส์เพิ่มเติม 4 · IS2 · ก30914", img: "img/t-noppol.jpg" },
+      { name: "ครูศจินันท์", subj: "คณิตศาสตร์เพิ่มเติม", img: "img/t-sajinan.jpg" },
+      { name: "ครูสุดสาคร", subj: "เคมี", img: "img/t/t-sudsakorn.jpg" },
+      { name: "ครูณัฐรินทร์", subj: "ชีววิทยา", img: "img/t/t-nattarin.jpg" },
+      { name: "ครูธวัชชัย", subj: "คณิตศาสตร์พื้นฐาน", img: "img/t/t-tawatchai.jpg" },
+      { name: "ครูอาคม", subj: "ภาษาไทย", img: "img/t/t-akom.jpg" },
+      { name: "ครูสุพัตรา", subj: "ภาษาอังกฤษ", img: "img/t/t-supattra.jpg" },
+      { name: "ครูพรนภา", subj: "ภาษาอังกฤษ เพิ่มเติม อ30204", img: "img/t/t-pornnapa.jpg" },
+      { name: "ครู Karl Patrick Soriano", subj: "ภาษาอังกฤษ เพิ่มเติม อ30216", img: "" },
+      { name: "ครูธีรวัฒน์", subj: "สังคมศึกษา", img: "img/t/t-teerawat.jpg" },
+      { name: "ครูธนพล", subj: "วอลเลย์บอล", img: "img/t/t-thanapol.jpg" },
+      { name: "ครูชูสกุล", subj: "ศิลปะ ศ32101", img: "img/t/t-choosakul.jpg" },
+      { name: "ครูกมลวรรณ", subj: "การงานอาชีพ", img: "img/t/t-kamonwan.jpg" },
+      { name: "ครูบังอร", subj: "วิทยาศาสตร์และเทคโนโลยี เพิ่มเติม ว30118", img: "img/t/t-bungorn.jpg" },
+      { name: "ครูอนุชา", subj: "วิทยาศาสตร์และเทคโนโลยี เพิ่มเติม ว30245", img: "img/t/t-anucha.jpg" },
+      { name: "ครูนพจรส", subj: "กิจกรรมพัฒนาผู้เรียน ก30904", img: "img/t/t-noppajarot.jpg" }
+    ],
     periods: [
       { n: 1, time: "08.30–09.20" }, { n: 2, time: "09.20–10.10" }, { n: 3, time: "10.10–11.00" },
       { n: 4, time: "11.00–11.50" }, { n: 5, time: "11.50–12.40" }, { n: 6, time: "12.40–13.30" },
