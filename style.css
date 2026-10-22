@@ -240,6 +240,20 @@ span.nw{display:inline!important;font-size:inherit!important;font-weight:inherit
 .tt-table td small{color:var(--muted)}
 .tt-table tr.today td{border-color:var(--gold);background:#fffaf0}
 .tt-scroll{overflow-x:auto}
+.tt-m{display:none}
+.tt-m .tt-days{gap:6px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px}
+.tt-m .tt-days .chip{padding:6px 12px;font-size:14px}
+.tt-days .chip.is-today{box-shadow:inset 0 -3px 0 var(--gold)}
+.tt-list{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:8px}
+.tt-list li{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.tt-list li.plain{background:transparent;border-style:dashed}
+.tt-p{font-family:var(--head);font-weight:600;color:var(--p700);font-size:14px;line-height:1.3}
+.tt-p small{display:block;font-family:inherit;font-weight:400;color:var(--muted);font-size:12.5px}
+.tt-list b{display:block;font-family:var(--head);font-weight:600;color:var(--ink);font-size:15px;line-height:1.35}
+.tt-list li small{color:var(--muted);font-size:13px}
+.tt-table td{min-width:0;font-size:13px}
+.tt-table td.plain{background:transparent;border-style:dashed}
+@media (max-width:1000px){.tt-scroll{display:none}.tt-m{display:block}}
 .dress{margin-top:22px}
 .dress-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 .dress-row div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center}

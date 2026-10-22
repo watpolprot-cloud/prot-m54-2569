@@ -394,20 +394,41 @@
       box.innerHTML = '<div class="placeholder"><h3>ตารางเรียน<span class="nw">ภาคเรียนที่ 2/2569</span> <span class="nw">กำลังจะมา</span></h3><p>' + tx("ครูจะลงตารางเรียนของห้อง ม.5/4 พร้อมชื่อครูประจำวิชาและห้องเรียนที่นี่ ทันทีที่ได้รับจากโรงเรียน เปิดดูจากโทรศัพท์ได้ทุกวัน และจะไฮไลต์วันปัจจุบันให้") + '</p><div class="ghost-grid" aria-hidden="true">' + g + "</div></div>";
     } else {
       var order = ["จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์"];
+      /* กันตัดคำไทยกลางคำ: แต่ละคำ/ช่องข้อมูลห้ามขึ้นบรรทัดใหม่ตรงกลาง */
+      var nwName = function (s) { return String(s || "").split(" ").map(function (w) { return '<span class="nw">' + esc(w).replace(/^(คณิตศาสตร์|วิทยาศาสตร์|ฟิสิกส์|กิจกรรม|ประชุม|ภาษา)(?=.)/, '$1</span><wbr><span class="nw">') + "</span>"; }).join(" "); };
+      var nwInfo = function (arr) { return arr.filter(Boolean).map(function (w) { return '<span class="nw">' + esc(w) + "</span>"; }).join(" · "); };
       var head = "<tr><th>วัน</th>" + tt.periods.map(function (p) { return "<th>คาบ " + p.n + "<br><small>" + esc(p.time || "") + "</small></th>"; }).join("") + "</tr>";
       var rows = order.map(function (d) {
         var cells = (tt.days[d] || []), cols = "", p = 1;
         tt.periods.forEach(function () {});
         while (p <= tt.periods.length) {
           var c = cells.filter(function (x) { return x.p === p; })[0];
-          if (c) { var sp = c.span || 1; cols += '<td colspan="' + sp + '"><b>' + esc(c.name) + "</b><small>" + esc([c.code, c.teacher, c.room].filter(Boolean).join(" · ")) + "</small></td>"; p += sp; }
+          if (c) { var sp = c.span || 1; cols += '<td colspan="' + sp + '"' + (c.code ? "" : ' class="plain"') + "><b>" + nwName(c.name) + "</b><small>" + nwInfo([c.code, c.teacher, c.room]) + "</small></td>"; p += sp; }
           else { cols += "<td></td>"; p++; }
         }
         return '<tr class="' + (d === wd ? "today" : "") + '"><th>' + d + "</th>" + cols + "</tr>";
       }).join("");
-      box.innerHTML = (tt.note ? '<p class="muted">' + esc(tt.note) + "</p>" : "") + '<div class="tt-scroll"><table class="tt-table">' + head + rows + "</table></div>" +
+      /* มือถือ: เลือกดูทีละวัน (เปิดมาที่วันนี้ ถ้าเป็นเสาร์–อาทิตย์เปิดวันจันทร์) */
+      var cur = order.indexOf(wd) > -1 ? wd : "จันทร์";
+      var pt = function (p, i) { var t = (tt.periods[p - 1] || {}).time || ""; return t.split("–")[i] || ""; };
+      var mob = '<div class="tt-m"><div class="tt-days" role="tablist">' + order.map(function (d) {
+        return '<button class="chip' + (d === wd ? " is-today" : "") + '" role="tab" data-ttday="' + d + '" aria-selected="' + (d === cur) + '"' + (d === wd ? ' title="วันนี้"' : "") + ">" + d + "</button>";
+      }).join("") + "</div>" + order.map(function (d) {
+        var list = (tt.days[d] || []).slice().sort(function (x, y) { return x.p - y.p; });
+        return '<ol class="tt-list" data-ttlist="' + d + '"' + (d === cur ? "" : " hidden") + ">" + list.map(function (c) {
+          var sp = c.span || 1, last = c.p + sp - 1;
+          return '<li class="' + (c.code ? "" : "plain") + '"><span class="tt-p">คาบ ' + c.p + (sp > 1 ? "–" + last : "") + "<small>" + esc(pt(c.p, 0) + "–" + pt(last, 1)) + "</small></span><div><b>" + nwName(c.name) + "</b>" +
+            (c.code || c.teacher || c.room ? "<small>" + nwInfo([c.code, c.teacher, c.room ? "ห้อง " + c.room : ""]) + "</small>" : "") + "</div></li>";
+        }).join("") + "</ol>";
+      }).join("") + "</div>";
+      box.innerHTML = (tt.note ? '<p class="muted">' + esc(tt.note) + "</p>" : "") + '<div class="tt-scroll"><table class="tt-table">' + head + rows + "</table></div>" + mob +
         (tt.image ? '<p><a class="btn line small" href="' + esc(tt.image) + '" target="_blank" rel="noopener">ดูภาพตารางเรียนต้นฉบับ</a></p>' : "");
     }
+    box.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-ttday]"); if (!b) return;
+      box.querySelectorAll("[data-ttday]").forEach(function (x) { x.setAttribute("aria-selected", x === b); });
+      box.querySelectorAll("[data-ttlist]").forEach(function (l) { l.hidden = l.getAttribute("data-ttlist") !== b.getAttribute("data-ttday"); });
+    });
     var dr = SITE.dress, db = $("#dressBox");
     if (dr && dr.days) {
       db.innerHTML = '<div class="dress"><h3 style="margin-bottom:10px;color:var(--p900)">ตารางการแต่งกาย</h3><div class="dress-row">' +
