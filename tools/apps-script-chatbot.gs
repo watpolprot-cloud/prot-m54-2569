@@ -7,6 +7,7 @@
 
    ค่าที่ปรับได้ใน Script Properties (ไม่ใส่ก็ใช้ค่าเริ่มต้น)
      GEMINI_MODEL   รุ่นของ Gemini           ค่าเริ่มต้น gemini-flash-latest
+     GEMINI_MODELS  รุ่นสำรองคั่นด้วยจุลภาค   ไม่ใส่ = ใช้รายการ FALLBACK_MODELS ด้านล่าง (เปลี่ยนได้โดยไม่ต้อง Deploy ใหม่)
      DAILY_LIMIT    คำถามสูงสุดต่อวันทั้งเว็บ   ค่าเริ่มต้น 300
 
    วิธีติดตั้งอยู่ใน UPDATE_GUIDE.md หัวข้อ "ผู้ช่วยตอบคำถาม (แชตบอต)"
@@ -14,7 +15,9 @@
 var SITE_URL = "https://watpolprot-cloud.github.io/prot-m54-2569/";
 var KNOWLEDGE_URL = SITE_URL + "data/knowledge.txt";
 var DEFAULT_MODEL = "gemini-flash-latest";
-var FALLBACK_MODELS = ["gemini-3.8-flash", "gemini-3.1-flash-lite"];   /* ใช้เมื่อรุ่นหลักไม่ว่างหรือไม่มีแล้ว */
+/* ใช้เมื่อรุ่นหลักไม่ว่าง (503 มีผู้ใช้มาก) หรือไม่มีแล้ว ไล่ทีละรุ่นจนกว่าจะได้คำตอบ (ตรวจรายชื่อรุ่นจริง 22 ต.ค. 2569) */
+var FALLBACK_MODELS = ["gemini-2.5-flash", "gemini-3.5-flash", "gemini-3.8-flash", "gemini-flash-lite-latest", "gemini-2.5-flash-lite", "gemini-3.1-flash-lite"];
+var ASK_DEADLINE = 38000;    /* มิลลิวินาที ต้องน้อยกว่าที่เว็บรอ (45 วินาที) */
 var PER_MINUTE = 12;        /* คำถามสูงสุดต่อนาทีทั้งเว็บ กันคนกดรัว */
 var MAX_Q = 500;            /* ความยาวคำถามสูงสุด (ตัวอักษร) */
 var MAX_TURNS = 6;          /* จำบทสนทนาก่อนหน้าได้กี่ข้อความ */
@@ -80,8 +83,11 @@ function ask_(q, hist) {
     systemInstruction: { parts: [{ text: RULES + "\n\n<<<ข้อมูลเว็บ>>>\n" + knowledge_() + "\n<<<จบข้อมูลเว็บ>>>\n\n" + now_() }] },
     contents: hist.concat([{ role: "user", parts: [{ text: q }] }])
   };
-  var models = [prop_("GEMINI_MODEL") || DEFAULT_MODEL].concat(FALLBACK_MODELS), last = "";
+  var extra = (prop_("GEMINI_MODELS") || "").split(",").map(function (m) { return m.trim(); }).filter(String);
+  var models = [prop_("GEMINI_MODEL") || DEFAULT_MODEL].concat(extra.length ? extra : FALLBACK_MODELS), last = "", start = Date.now();
+  models = models.filter(function (m, i) { return models.indexOf(m) === i; });
   for (var i = 0; i < models.length; i++) {
+    if (i > 0 && Date.now() - start > ASK_DEADLINE) break;
     var res = UrlFetchApp.fetch("https://generativelanguage.googleapis.com/v1beta/models/" + encodeURIComponent(models[i]) + ":generateContent", {
       method: "post",
       contentType: "application/json",
