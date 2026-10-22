@@ -76,6 +76,7 @@ NEWS.forEach((n, i) => {
     else if (/[^\x20-\x7e]/.test(f.path)) warn(`${at}: ชื่อไฟล์ ${f.path} ควรเป็นภาษาอังกฤษล้วน`);
   });
 });
+(SITE.teachers || []).forEach((t) => { if (t.link && !/^https:\/\//.test(t.link)) err(`site.js teachers: ลิงก์ของ ${t.name} ต้องขึ้นต้นด้วย https://`); });
 (SITE.calendar || []).forEach((c) => { if (!okDate(c.date || "")) err(`site.js calendar: วันที่ "${c.date}" ต้องเป็น ค.ศ. แบบ 2026-11-02`); });
 (SITE.countdowns || []).forEach((c) => { if (!okDate(c.date || "")) err(`site.js countdowns: วันที่ "${c.date}" ต้องเป็น ค.ศ.`); });
 

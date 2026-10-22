@@ -84,12 +84,29 @@
     function flush() { if (list.length) { out.push("<ul>" + list.join("") + "</ul>"); list = []; } }
     String(txt || "").split("\n").forEach(function (line) {
       var l = line.trim();
-      if (/^[-•]\s+/.test(l)) { list.push("<li>" + protect(linkify(esc(l.replace(/^[-•]\s+/, "")))) + "</li>"); }
-      else { flush(); if (l) out.push("<p>" + protect(linkify(esc(l))) + "</p>"); }
+      if (/^[-•]\s+/.test(l)) { list.push("<li>" + protect(nameLinks(linkify(esc(l.replace(/^[-•]\s+/, ""))))) + "</li>"); }
+      else { flush(); if (l) out.push("<p>" + protect(nameLinks(linkify(esc(l)))) + "</p>"); }
     });
     flush(); return out.join("");
   }
   function linkify(s) { return s.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>'); }
+  /* ชื่อครูที่มีหน้าแนะนำตัว (site.js teachers[].link): กดชื่อหรือรูปแล้วไปหน้านั้น หน้าตาเหมือนข้อความปกติ ไม่มีสัญลักษณ์ */
+  function firstName(n) { return String(n || "").replace(/^ครู\s*/, "").split(" ")[0]; }
+  var TLINKS = (SITE.teachers || []).filter(function (t) { return t.link; });
+  function tLink(n) { var f = firstName(n), t = TLINKS.filter(function (x) { return firstName(x.name) === f; })[0]; return t ? t.link : ""; }
+  function hl(url, inner, cls) { return '<a class="hl' + (cls ? " " + cls : "") + '" href="' + esc(url) + '" target="_blank" rel="noopener">' + inner + "</a>"; }
+  var TL_RE = TLINKS.length ? new RegExp("(?:ครู)?(?:" + TLINKS.map(function (t) {
+    var p = t.name.replace(/^ครู\s*/, "").split(" "); return p[0] + (p[1] ? "(?: " + p[1] + ")?" : "");
+  }).join("|") + ")", "g") : null;
+  /* ใส่ลิงก์ให้ชื่อครูในข้อความที่เป็น HTML แล้ว (ข้ามแท็กและข้อความที่อยู่ในลิงก์อื่น) */
+  function nameLinks(h) {
+    if (!TL_RE) return h;
+    var inA = 0;
+    return String(h).replace(/(<[^>]*>)|([^<]+)/g, function (m, tag, text) {
+      if (tag) { if (/^<a[\s>]/i.test(tag)) inA++; else if (/^<\/a>/i.test(tag)) inA--; return tag; }
+      return inA ? text : text.replace(TL_RE, function (s) { var u = tLink(s); return u ? hl(u, s) : s; });
+    });
+  }
   function newsUrl(id) { return location.origin + location.pathname + "#n=" + encodeURIComponent(id); }
   function newsById(id) { return ALL.filter(function (x) { return x.id === id; })[0]; }
   function pad2(n) { return String(n).padStart(2, "0"); }
@@ -306,7 +323,7 @@
       h += '<div class="m-box ev"><h4>วันและเวลา</h4><div>' + esc(rangeTxt(ev.start, ev.end)) + (ev.time ? " เวลา " + esc(ev.time) : "") + (ev.place ? "<br>สถานที่: " + esc(ev.place) : "") + "</div></div>";
     }
     if (n.todo && n.todo.length) {
-      h += '<div class="m-box"><h4>สิ่งที่ต้องทำ</h4><ul>' + n.todo.map(function (t) { return "<li>" + tx(t.text) + (t.due ? " (ภายใน" + esc(thLong(t.due)) + ")" : "") + (t.who && WHO[t.who] ? " · " + WHO[t.who] : "") + "</li>"; }).join("") + "</ul></div>";
+      h += '<div class="m-box"><h4>สิ่งที่ต้องทำ</h4><ul>' + n.todo.map(function (t) { return "<li>" + nameLinks(tx(t.text)) + (t.due ? " (ภายใน" + esc(thLong(t.due)) + ")" : "") + (t.who && WHO[t.who] ? " · " + WHO[t.who] : "") + "</li>"; }).join("") + "</ul></div>";
     }
     h += '<div class="m-body">' + bodyHtml(n.body || n.summary) + "</div>";
     if (n.files && n.files.length) {
@@ -403,7 +420,11 @@
         var im = TIMG[n], ini = String(n || "").replace(/^ครู\s*/, "").charAt(0);
         return im ? '<span class="' + cls + '"><img src="' + esc(im) + '" alt="" loading="lazy"></span>' : '<span class="' + cls + ' tt-ini" aria-hidden="true">' + esc(ini) + "</span>";
       };
-      var who = function (n) { return n ? '<span class="tt-who">' + tav(n, "tt-av") + "<i>" + nwName(n) + "</i></span>" : ""; };
+      var who = function (n) {
+        if (!n) return "";
+        var in_ = tav(n, "tt-av") + "<i>" + nwName(n) + "</i>", u = tLink(n);
+        return u ? hl(u, in_, "tt-who") : '<span class="tt-who">' + in_ + "</span>";
+      };
       var head = "<tr><th>วัน</th>" + tt.periods.map(function (p) { return "<th>คาบ " + p.n + "<br><small>" + esc(p.time || "") + "</small></th>"; }).join("") + "</tr>";
       var rows = order.map(function (d) {
         var cells = (tt.days[d] || []), cols = "", p = 1;
@@ -430,7 +451,8 @@
       }).join("") + "</div>";
       box.innerHTML = (tt.note ? '<p class="muted">' + esc(tt.note) + "</p>" : "") + '<div class="tt-scroll"><table class="tt-table">' + head + rows + "</table></div>" + mob +
         ((tt.teachers || []).length ? '<div class="tt-teach"><h3>ครูประจำวิชา ภาคเรียนที่ ' + esc(SITE.term) + '</h3><div class="tt-tg">' + tt.teachers.map(function (t) {
-          return '<div class="tt-tc">' + tav(t.name, "tt-big") + "<b>" + nwName(t.name) + "</b><span>" + nwName(t.subj) + "</span></div>";
+          var in_ = tav(t.name, "tt-big") + "<b>" + nwName(t.name) + "</b><span>" + nwName(t.subj) + "</span>", u = tLink(t.name);
+          return u ? hl(u, in_, "tt-tc") : '<div class="tt-tc">' + in_ + "</div>";
         }).join("") + "</div></div>" : "") +
         '<p class="tt-btns">' + (tt.imageTeachers ? '<a class="btn gold small" href="' + esc(tt.imageTeachers) + '" target="_blank" rel="noopener">ภาพตารางเรียนแบบมีรูปครู</a> ' : "") + (tt.image ? '<a class="btn line small" href="' + esc(tt.image) + '" target="_blank" rel="noopener">ภาพตารางเรียนต้นฉบับ</a>' : "") + "</p>";
     }
@@ -466,7 +488,8 @@
   /* ---------- room ---------- */
   (function () {
     $("#teachers").innerHTML = (SITE.teachers || []).map(function (t) {
-      return '<div class="t-card"><div class="ph"><img src="' + esc(t.img) + '" alt="' + esc(t.name) + '" loading="lazy"></div><div class="tx"><em>' + esc(t.call) + "</em><b>" + t.name.split(" ").map(function (w) { return '<span class="nw">' + esc(w) + "</span>"; }).join(" ") + "</b><span>ครูที่ปรึกษา</span><span>" + esc(t.dept) + "</span></div></div>";
+      var in_ = '<div class="ph"><img src="' + esc(t.img) + '" alt="' + esc(t.name) + '" loading="lazy"></div><div class="tx"><em>' + esc(t.call) + "</em><b>" + t.name.split(" ").map(function (w) { return '<span class="nw">' + esc(w) + "</span>"; }).join(" ") + "</b><span>ครูที่ปรึกษา</span><span>" + esc(t.dept) + "</span></div>";
+      return t.link ? hl(t.link, in_, "t-card") : '<div class="t-card">' + in_ + "</div>";
     }).join("");
     var r = SITE.room || {};
     $("#roomFacts").innerHTML = '<div class="facts"><div class="fact"><b data-count="' + r.students + '">0</b><span>นักเรียนทั้งหมด</span></div><div class="fact"><b data-count="' + r.boys + '">0</b><span>นักเรียนชาย</span></div><div class="fact"><b data-count="' + r.girls + '">0</b><span>นักเรียนหญิง</span></div></div>' +
@@ -696,7 +719,7 @@
         if (list) { out += "</ul>"; list = false; }
         if (line.trim()) out += "<p>" + inline(line.trim()) + "</p>";
       });
-      return protect(keepNames(out + (list ? "</ul>" : "")));
+      return protect(keepNames(nameLinks(out + (list ? "</ul>" : ""))));
     }
     function draw() {
       var h = '<div class="cb-msg bot">' + md(HELLO) + "</div>";
