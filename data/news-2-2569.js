@@ -41,6 +41,7 @@ window.M54_NEWS.push(
   todo: [ { text: "แต่งชุดนักเรียนถูกระเบียบ และนำอุปกรณ์ทำความสะอาดกับผ้าเช็ดมาโรงเรียน", due: "2026-10-26", who: "student" } ],
   event: { start: "2026-10-26", end: "", time: "07.30 น.", place: "โรงเรียนพรตพิทยพยัต", title: "เปิดภาคเรียนที่ 2/2569" },
   links: [ { label: "ตารางเรียน ม.5/4 ภาคเรียนที่ 2/2569", url: "https://watpolprot-cloud.github.io/prot-m54-2569/#timetable" }, { label: "ข่าว Big Cleaning Day", url: "https://watpolprot-cloud.github.io/prot-m54-2569/#n=2569-10-22-big-cleaning" }, { label: "ผังเข้าแถวคณะสี", url: "https://watpolprot-cloud.github.io/prot-m54-2569/#n=2569-10-22-house-lineup" }, { label: "ประกาศตรวจระเบียบ", url: "https://watpolprot-cloud.github.io/prot-m54-2569/#n=2569-10-23-uniform-check" }, { label: "ตอบแบบสำรวจอุทกภัย", url: "https://forms.gle/CTmbEJQ893UTE3vq9" } ],
+  files: [ { label: "ภาพสรุปการเตรียมตัววันเปิดภาค", path: "docs/2569/2569-10-25-first-day.jpg" } ],
   src: "LINE นักเรียนและผู้ปกครอง"
 },
 
