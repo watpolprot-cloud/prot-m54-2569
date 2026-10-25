@@ -425,7 +425,11 @@
         var in_ = tav(n, "tt-av") + "<i>" + nwName(n) + "</i>", u = tLink(n);
         return u ? hl(u, in_, "tt-who") : '<span class="tt-who">' + in_ + "</span>";
       };
-      var head = "<tr><th>วัน</th>" + tt.periods.map(function (p) { return "<th>คาบ " + p.n + "<br><small>" + esc(p.time || "") + "</small></th>"; }).join("") + "</tr>";
+      /* ตารางเวลาช่วงพิเศษ (tt.alt): แสดงตั้งแต่ก่อนเริ่มจนถึงวันสุดท้าย แล้วกลับเป็นเวลาปกติเอง */
+      var al = tt.alt, useAlt = !!(al && TODAY <= al.to), dm = function (x) { var d = parse(x); return d.getUTCDate() + " " + MONTHS[d.getUTCMonth()]; };
+      var ptime = function (i) { return useAlt ? (al.periods[i] || "") : ((tt.periods[i] || {}).time || ""); };
+      var altBox = useAlt ? '<div class="tt-alt"><b>' + esc(TODAY >= al.from ? "ตอนนี้ใช้" : "ตั้งแต่ " + dm(al.from)) + " " + esc(al.label) + " ถึง " + esc(thMed(al.to)) + "</b><p>" + tx(al.why) + "</p><p>เรียนเสร็จ " + ["จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์"].map(function (d) { return '<span class="nw">' + d + " " + esc(al.ends[d]) + " น.</span>"; }).join(" · ") + "</p>" + (al.tentative ? '<p class="muted">ตารางช่วงนี้โรงเรียนยังอาจปรับเปลี่ยน ครูจะอัปเดตที่นี่ทันที</p>' : "") + "</div>" : "";
+      var head = "<tr><th>วัน</th>" + tt.periods.map(function (p, i) { return "<th>คาบ " + p.n + "<br><small>" + esc(ptime(i)) + "</small>" + (useAlt ? '<small class="tt-old">ปกติ ' + esc(p.time || "") + "</small>" : "") + "</th>"; }).join("") + "</tr>";
       var rows = order.map(function (d) {
         var cells = (tt.days[d] || []), cols = "", p = 1;
         tt.periods.forEach(function () {});
@@ -438,7 +442,7 @@
       }).join("");
       /* มือถือ: เลือกดูทีละวัน (เปิดมาที่วันนี้ ถ้าเป็นเสาร์–อาทิตย์เปิดวันจันทร์) */
       var cur = order.indexOf(wd) > -1 ? wd : "จันทร์";
-      var pt = function (p, i) { var t = (tt.periods[p - 1] || {}).time || ""; return t.split("–")[i] || ""; };
+      var pt = function (p, i) { return ptime(p - 1).split("–")[i] || ""; };
       var mob = '<div class="tt-m"><div class="tt-days" role="tablist">' + order.map(function (d) {
         return '<button class="chip' + (d === wd ? " is-today" : "") + '" role="tab" data-ttday="' + d + '" aria-selected="' + (d === cur) + '"' + (d === wd ? ' title="วันนี้"' : "") + ">" + d + "</button>";
       }).join("") + "</div>" + order.map(function (d) {
@@ -449,12 +453,12 @@
             (c.code || c.room ? "<small>" + nwInfo([c.code, c.room ? "ห้อง " + c.room : ""]) + "</small>" : "") + who(c.teacher) + "</div></li>";
         }).join("") + "</ol>";
       }).join("") + "</div>";
-      box.innerHTML = (tt.note ? '<p class="muted">' + esc(tt.note) + "</p>" : "") + '<div class="tt-scroll"><table class="tt-table">' + head + rows + "</table></div>" + mob +
+      box.innerHTML = altBox + (tt.note ? '<p class="muted">' + (useAlt ? "ตารางเรียนที่ 1 (เวลาปกติ): " : "") + esc(tt.note) + "</p>" : "") + '<div class="tt-scroll"><table class="tt-table">' + head + rows + "</table></div>" + mob +
         ((tt.teachers || []).length ? '<div class="tt-teach"><h3>ครูประจำวิชา ภาคเรียนที่ ' + esc(SITE.term) + '</h3><div class="tt-tg">' + tt.teachers.map(function (t) {
           var in_ = tav(t.name, "tt-big") + "<b>" + nwName(t.name) + "</b><span>" + nwName(t.subj) + "</span>", u = tLink(t.name);
           return u ? hl(u, in_, "tt-tc") : '<div class="tt-tc">' + in_ + "</div>";
         }).join("") + "</div></div>" : "") +
-        '<p class="tt-btns">' + (tt.imageTeachers ? '<a class="btn gold small" href="' + esc(tt.imageTeachers) + '" target="_blank" rel="noopener">ภาพตารางเรียนแบบมีรูปครู</a> ' : "") + (tt.image ? '<a class="btn line small" href="' + esc(tt.image) + '" target="_blank" rel="noopener">ภาพตารางเรียนต้นฉบับ</a>' : "") + "</p>";
+        '<p class="tt-btns">' + (useAlt && al.image ? '<a class="btn gold small" href="' + esc(al.image) + '" target="_blank" rel="noopener">ภาพ' + esc(al.label) + "</a> " : "") + (tt.imageTeachers ? '<a class="btn gold small" href="' + esc(tt.imageTeachers) + '" target="_blank" rel="noopener">ภาพตารางเรียนแบบมีรูปครู</a> ' : "") + (tt.image ? '<a class="btn line small" href="' + esc(tt.image) + '" target="_blank" rel="noopener">ภาพตารางเรียนต้นฉบับ</a>' : "") + "</p>";
     }
     box.addEventListener("click", function (e) {
       var b = e.target.closest("[data-ttday]"); if (!b) return;

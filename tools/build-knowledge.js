@@ -80,6 +80,8 @@ function build() {
   else {
     L.push("ตารางเรียน: " + clean(T.note) + (T.image ? " ภาพต้นฉบับ " + abs(T.image) : ""));
     const per = Object.fromEntries((T.periods || []).map((p) => [p.n, p.time]));
+    const A = T.alt;
+    if (A) L.push(`${A.label} ใช้ ${A.from} ถึง ${A.to}: ${clean(A.why)} เวลาคาบ: ` + A.periods.map((t, i) => `คาบ ${i + 1} ${t}`).join(" · ") + " · เรียนเสร็จ " + Object.entries(A.ends || {}).map(([d, t]) => `วัน${d} ${t} น.`).join(" · ") + (A.tentative ? " (โรงเรียนยังอาจปรับเปลี่ยน)" : "") + " · นอกช่วงนี้ใช้เวลาคาบปกติข้างล่าง");
     Object.entries(T.days || {}).forEach(([d, list]) => {
       L.push(`วัน${d}: ` + list.map((c) => `คาบ ${c.p}${c.span > 1 ? "-" + (c.p + c.span - 1) : ""}${per[c.p] ? " (" + per[c.p] + ")" : ""} ${c.code || ""} ${c.name || ""}${c.teacher ? " " + c.teacher : ""}${c.room ? " ห้อง " + c.room : ""}`.replace(/\s+/g, " ")).join(" · "));
     });

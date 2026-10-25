@@ -678,3 +678,8 @@ a.hl.tt-who{color:var(--p700)}
 .tt-table .tt-who{font-size:12.5px;gap:5px}
 .tt-table .tt-av{width:28px;height:28px;font-size:13px}
 .tt-btns{display:flex;flex-wrap:wrap;gap:10px}
+/* ตารางเวลาช่วงพิเศษ (ตารางเรียนที่ 2) */
+.tt-alt{background:#fff7e0;border:1px solid #f6c453;border-left:6px solid #f6c453;border-radius:14px;padding:12px 16px;margin:0 0 14px}
+.tt-alt b{display:block;color:#24143d;font-size:1.05rem}
+.tt-alt p{margin:.35em 0 0}
+.tt-table th small.tt-old{display:block;opacity:.55;font-size:.72em;text-decoration:line-through}
