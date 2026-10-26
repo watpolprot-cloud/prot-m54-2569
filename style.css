@@ -526,6 +526,11 @@ a.hl.tt-who{color:var(--p700)}
 .m-files{display:grid;gap:12px}
 .m-files img{border-radius:12px;border:1px solid var(--line);max-height:70vh;width:auto;margin:0 auto}
 .m-gallery{margin:16px 0}
+.m-video{margin:16px 0}
+.m-video h4{font-size:15px;color:var(--p700);margin-bottom:8px}
+.m-video video{display:block;width:100%;max-width:420px;max-height:80vh;margin:0 auto;border-radius:12px;background:#000}
+.v-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.v-grid video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:10px;background:#000}
 .m-gallery h4{font-size:15px;color:var(--p700);margin-bottom:4px}
 .m-gallery h4 small{font-family:var(--body);font-weight:400;font-size:13px;color:var(--muted);margin-left:6px}
 .m-gallery h5{font-family:var(--head);font-size:14px;font-weight:500;color:var(--ink);margin:14px 0 8px}

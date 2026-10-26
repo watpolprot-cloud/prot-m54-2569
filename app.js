@@ -332,6 +332,14 @@
           : '<div class="m-links"><a href="' + esc(f.path) + '" target="_blank" rel="noopener">' + esc(f.label) + "</a></div>";
       }).join("") + "</div>";
     }
+    if (n.video && n.video.path) {
+      h += '<div class="m-video"><h4>' + tx(n.video.label || "คลิปวิดีโอ") + '</h4><video controls playsinline preload="metadata" src="' + esc(n.video.path) + '"' + (n.video.poster ? ' poster="' + esc(n.video.poster) + '"' : "") + '></video></div>';
+    }
+    if (n.clips && n.clips.n) {
+      var cd = n.clips.dir || "", cl = "";
+      for (var q = 1; q <= n.clips.n; q++) { var qq = pad2(q); cl += '<video controls playsinline preload="none" src="' + esc(cd + "c" + qq + ".mp4") + '" poster="' + esc(cd + "cp" + qq + ".jpg") + '"></video>'; }
+      h += '<div class="m-gallery"><h4>' + tx(n.clips.t || "คลิปกิจกรรม") + " " + n.clips.n + ' คลิป <small>กดเล่นทีละคลิป</small></h4><div class="v-grid">' + cl + "</div></div>";
+    }
     if (n.gallery && n.gallery.groups) {
       var gi = 0, gd = n.gallery.dir || "";
       h += '<div class="m-gallery"><h4>ภาพกิจกรรม ' + n.gallery.groups.reduce(function (s, g) { return s + g.n; }, 0) + ' ภาพ <small>กดที่ภาพเพื่อดูขนาดเต็ม</small></h4>' + n.gallery.groups.map(function (g) {
