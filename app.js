@@ -172,21 +172,36 @@
     var words = ["ข่าวสาร", "สิ่งที่ต้องทำ", "ปฏิทิน", "ตารางเรียน", "เอกสาร", "ความทรงจำ"]; var i = 0; var el = $("#rotator");
     setInterval(function () { el.classList.add("out"); setTimeout(function () { i = (i + 1) % words.length; el.textContent = words[i]; el.classList.remove("out"); }, 350); }, 2600);
 
-    var next = (SITE.countdowns || []).filter(function (c) { return c.date >= TODAY; }).sort(function (a, b) { return a.date < b.date ? -1 : 1; })[0];
+    /* นับถอยหลังไปวันสำคัญถัดไป (เวลาเริ่ม time ไม่ใส่ = 07.30 น.) พอถึงเวลาแล้วเลื่อนไปเรื่องถัดไปเองโดยไม่ต้องโหลดหน้าใหม่
+       บรรทัดบน: ก่อนเปิดภาค "อีกไม่นาน" · ระหว่างภาค "ภาคเรียนที่ ... สัปดาห์ที่ ..." · ถ้าวันนี้ตรงกับวันสำคัญ "วันนี้ ..."
+       ไม่มีวันสำคัญเหลือแล้ว = บอกสัปดาห์ที่ของภาคเรียนอย่างเดียว */
     var box = $("#countdown");
-    if (next) {
+    var CDS = (SITE.countdowns || []).map(function (c) {
+      var t = String(c.time || "07.30").split(/[.:]/);
+      return { label: c.label, date: c.date, end: c.end || c.date, at: parse(c.date).getTime() + ((+t[0] - 7) * 60 + (+t[1] || 0)) * 60000 };
+    }).sort(function (a, b) { return a.at - b.at; });
+    var t0 = Date.now(), fake = params.get("today") ? parse(TODAY).getTime() + 5 * 3600000 : 0; /* ?today= ทดสอบ: สมมติเป็นเวลาเที่ยงวันของวันนั้น */
+    function weekNo(day) { var s = parse(SITE.termStart), off = (s.getUTCDay() + 6) % 7; return Math.floor((diffDays(day, SITE.termStart) + off) / 7) + 1; }
+    function cdLabel(top, main, sub) { return '<div class="cd-label">' + top + "<b>" + main + "</b>" + esc(sub) + "</div>"; }
+    function unit(n, w) { return '<div class="cd-u"><b>' + n + "</b><small>" + w + "</small></div>"; }
+    function tick() {
+      var now = fake ? fake + Date.now() - t0 : Date.now(), day = iso(new Date(now + 7 * 3600000));
+      var next = CDS.filter(function (c) { return c.at > now; })[0];
+      var today = CDS.filter(function (c) { return c.at <= now && c.date <= day && c.end >= day; })[0];
+      var inTerm = !!SITE.termStart && day >= SITE.termStart;
+      var week = '<span class="nw">ภาคเรียนที่ ' + esc(SITE.term) + '</span> <span class="nw">สัปดาห์ที่ ' + (inTerm ? weekNo(day) : "") + "</span>";
+      var top = today ? "วันนี้ " + tx(today.label) : inTerm ? week : "อีกไม่นาน";
+      if (next) {
+        var ms = next.at - now, p2 = function (x) { return String(x).padStart(2, "0"); };
+        box.innerHTML = cdLabel(top, (inTerm ? '<span class="cd-next">ถัดไป</span>' : "") + tx(next.label), thLong(next.date)) +
+          '<div class="cd-units">' + unit(Math.floor(ms / 86400000), "วัน") + unit(p2(Math.floor(ms / 3600000) % 24), "ชั่วโมง") +
+          unit(p2(Math.floor(ms / 60000) % 60), "นาที") + unit(p2(Math.floor(ms / 1000) % 60), "วินาที") + "</div>";
+      } else if (today || inTerm) {
+        box.innerHTML = today ? cdLabel("วันนี้", tx(today.label), thLong(day)) : cdLabel('<span class="nw">ภาคเรียนที่ ' + esc(SITE.term) + "</span>", "สัปดาห์ที่ " + weekNo(day), thLong(day));
+      } else { box.hidden = true; return; }
       box.hidden = false;
-      var target = parse(next.date).getTime() - 7 * 3600 * 1000 + 7.5 * 3600 * 1000; /* 07.30 น. เวลาไทย */
-      function tick() {
-        var ms = Math.max(0, target - Date.now());
-        var d = Math.floor(ms / 86400000), h = Math.floor(ms / 3600000) % 24, m = Math.floor(ms / 60000) % 60, s = Math.floor(ms / 1000) % 60;
-        if (params.get("today")) { d = diffDays(next.date, TODAY); h = m = s = 0; }
-        box.innerHTML = '<div class="cd-label">อีกไม่นาน<b>' + esc(next.label) + '</b>' + esc(thLong(next.date)) + '</div>' +
-          '<div class="cd-units"><div class="cd-u"><b>' + d + '</b><small>วัน</small></div><div class="cd-u"><b>' + String(h).padStart(2, "0") + '</b><small>ชั่วโมง</small></div>' +
-          '<div class="cd-u"><b>' + String(m).padStart(2, "0") + '</b><small>นาที</small></div><div class="cd-u"><b>' + String(s).padStart(2, "0") + '</b><small>วินาที</small></div></div>';
-      }
-      tick(); setInterval(tick, 1000);
     }
+    tick(); setInterval(tick, 1000);
   })();
 
   /* ---------- ticker ---------- */

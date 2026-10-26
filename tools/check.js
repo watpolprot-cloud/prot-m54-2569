@@ -78,7 +78,11 @@ NEWS.forEach((n, i) => {
 });
 (SITE.teachers || []).forEach((t) => { if (t.link && !/^https:\/\//.test(t.link)) err(`site.js teachers: ลิงก์ของ ${t.name} ต้องขึ้นต้นด้วย https://`); });
 (SITE.calendar || []).forEach((c) => { if (!okDate(c.date || "")) err(`site.js calendar: วันที่ "${c.date}" ต้องเป็น ค.ศ. แบบ 2026-11-02`); });
-(SITE.countdowns || []).forEach((c) => { if (!okDate(c.date || "")) err(`site.js countdowns: วันที่ "${c.date}" ต้องเป็น ค.ศ.`); });
+(SITE.countdowns || []).forEach((c) => {
+  if (!okDate(c.date || "")) err(`site.js countdowns: วันที่ "${c.date}" ต้องเป็น ค.ศ.`);
+  if (c.end && (!okDate(c.end) || c.end < c.date)) err(`site.js countdowns: วันสุดท้าย "${c.end}" ของ ${c.label} ต้องเป็น ค.ศ. และไม่ก่อนวันเริ่ม`);
+  if (c.time && !/^([01]?\d|2[0-3])[.:][0-5]\d$/.test(c.time)) err(`site.js countdowns: เวลา "${c.time}" ของ ${c.label} ต้องเป็นแบบ 09.00`);
+});
 
 /* ---------- 1.5) ตรวจสมาชิกห้องและแฟ้มผลงาน (data/members.js) ---------- */
 const MEM = ctx.window.M54_MEMBERS, ARC = ctx.window.M54_ARCHIVE || {};

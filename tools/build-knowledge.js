@@ -69,7 +69,7 @@ function build() {
   h("ประกาศด่วนและวันสำคัญ");
   if (S.alert && S.alert.text) L.push("แถบประกาศด่วน: " + S.alert.text + (S.alert.until ? " (ถึง " + thDate(S.alert.until) + ")" : "") + (S.alert.link ? " " + S.alert.link : ""));
   else L.push("แถบประกาศด่วน: ไม่มี");
-  (S.countdowns || []).forEach((c) => L.push(`นับถอยหลัง: ${c.label} ${thDate(c.date, true)}`));
+  (S.countdowns || []).forEach((c) => L.push(`นับถอยหลัง: ${c.label} ${thDate(c.date, true)}${c.end && c.end !== c.date ? " ถึง " + thDate(c.end, true) : ""}${c.time ? " เวลา " + c.time + " น." : ""}`));
 
   h("เรื่องที่ยังรอโรงเรียนประกาศ");
   (S.pending || []).forEach((p) => L.push(`- ${p.title}: ${p.note}`));

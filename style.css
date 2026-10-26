@@ -92,6 +92,7 @@ span.nw{display:inline!important;font-size:inherit!important;font-weight:inherit
   background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(10px);animation:rise .9s 1s both}
 .countdown .cd-label{font-family:var(--head);font-size:14px;color:#d9cdee;text-align:left;line-height:1.35}
 .countdown .cd-label b{display:block;color:#fff;font-size:17px}
+.countdown .cd-next{margin-right:6px;color:var(--gold);font-size:14px}
 .cd-units{display:flex;gap:8px}
 .cd-u{min-width:62px;padding:6px 8px;border-radius:12px;background:rgba(23,13,41,.6);text-align:center}
 .cd-u b{display:block;font-family:var(--head);font-size:28px;line-height:1.1;color:var(--gold2);font-variant-numeric:tabular-nums}
