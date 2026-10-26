@@ -332,6 +332,14 @@
           : '<div class="m-links"><a href="' + esc(f.path) + '" target="_blank" rel="noopener">' + esc(f.label) + "</a></div>";
       }).join("") + "</div>";
     }
+    if (n.gallery && n.gallery.groups) {
+      var gi = 0, gd = n.gallery.dir || "";
+      h += '<div class="m-gallery"><h4>ภาพกิจกรรม ' + n.gallery.groups.reduce(function (s, g) { return s + g.n; }, 0) + ' ภาพ <small>กดที่ภาพเพื่อดูขนาดเต็ม</small></h4>' + n.gallery.groups.map(function (g) {
+        var cells = "";
+        for (var k = 0; k < g.n; k++) { gi++; var nn = pad2(gi); cells += '<a href="' + esc(gd + nn + ".jpg") + '" target="_blank" rel="noopener"><img src="' + esc(gd + "t" + nn + ".jpg") + '" alt="' + esc(g.t) + '" loading="lazy"></a>'; }
+        return (g.t ? "<h5>" + tx(g.t) + "</h5>" : "") + '<div class="g-grid">' + cells + "</div>";
+      }).join("") + "</div>";
+    }
     if (n.links && n.links.length) {
       h += '<div class="m-box"><h4>ลิงก์ที่เกี่ยวข้อง</h4><div class="m-links">' + n.links.map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + "</a>"; }).join("") + "</div></div>";
     }
