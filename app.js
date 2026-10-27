@@ -340,6 +340,9 @@
     if (n.todo && n.todo.length) {
       h += '<div class="m-box"><h4>สิ่งที่ต้องทำ</h4><ul>' + n.todo.map(function (t) { return "<li>" + nameLinks(tx(t.text)) + (t.due ? " (ภายใน" + esc(thLong(t.due)) + ")" : "") + (t.who && WHO[t.who] ? " · " + WHO[t.who] : "") + "</li>"; }).join("") + "</ul></div>";
     }
+    // video.top: true = แสดงคลิปไว้ก่อนเนื้อข่าว ให้เห็นทันทีเมื่อเปิดข่าว
+    var videoHtml = n.video && n.video.path ? '<div class="m-video"><h4>' + tx(n.video.label || "คลิปวิดีโอ") + '</h4><video controls playsinline preload="metadata" src="' + esc(n.video.path) + '"' + (n.video.poster ? ' poster="' + esc(n.video.poster) + '"' : "") + '></video></div>' : "";
+    if (n.video && n.video.path && n.video.top) h += videoHtml;
     h += '<div class="m-body">' + bodyHtml(n.body || n.summary) + "</div>";
     if (n.files && n.files.length) {
       h += '<div class="m-files">' + n.files.map(function (f) {
@@ -347,9 +350,7 @@
           : '<div class="m-links"><a href="' + esc(f.path) + '" target="_blank" rel="noopener">' + esc(f.label) + "</a></div>";
       }).join("") + "</div>";
     }
-    if (n.video && n.video.path) {
-      h += '<div class="m-video"><h4>' + tx(n.video.label || "คลิปวิดีโอ") + '</h4><video controls playsinline preload="metadata" src="' + esc(n.video.path) + '"' + (n.video.poster ? ' poster="' + esc(n.video.poster) + '"' : "") + '></video></div>';
-    }
+    if (n.video && n.video.path && !n.video.top) h += videoHtml;
     if (n.clips && n.clips.n) {
       var cd = n.clips.dir || "", cl = "";
       for (var q = 1; q <= n.clips.n; q++) { var qq = pad2(q); cl += '<video controls playsinline preload="none" src="' + esc(cd + "c" + qq + ".mp4") + '" poster="' + esc(cd + "cp" + qq + ".jpg") + '"></video>'; }
