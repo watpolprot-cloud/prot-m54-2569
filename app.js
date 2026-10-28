@@ -111,6 +111,16 @@
   function newsById(id) { return ALL.filter(function (x) { return x.id === id; })[0]; }
   function pad2(n) { return String(n).padStart(2, "0"); }
 
+  /* ภาพโหลดไม่ขึ้น (เน็ตสะดุด/เว็บเพิ่งอัปเดต) ให้ลองโหลดใหม่เองสูงสุด 3 ครั้ง */
+  document.addEventListener("error", function (e) {
+    var im = e.target;
+    if (!im || im.tagName !== "IMG") return;
+    var r = +(im.dataset.retry || 0);
+    if (r >= 3) return;
+    im.dataset.retry = r + 1;
+    setTimeout(function () { im.src = im.src.split("?")[0] + "?r=" + (r + 1) + "-" + Date.now(); }, 1000 * (r + 1));
+  }, true);
+
   /* ---------- สมาชิกห้อง (ข้อมูลจาก data/members.js) ---------- */
   var MEM = window.M54_MEMBERS || {};
   ["order", "students"].forEach(function (k) { MEM[k] = MEM[k] || []; });
