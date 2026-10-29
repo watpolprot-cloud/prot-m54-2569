@@ -46,6 +46,7 @@ window.M54_NEWS.push(
     { t: "เก็บขยะและพับผ้าใบก่อนกลับบ้าน", n: 6 }
   ] },
   links: [ { label: "ข่าวทำฉากวันที่ 3 (28 ต.ค.)", url: "https://watpolprot-cloud.github.io/prot-m54-2569/#n=2569-10-28-house-backdrop-3" }, { label: "ข่าวทำฉากวันที่ 2 (27 ต.ค.)", url: "https://watpolprot-cloud.github.io/prot-m54-2569/#n=2569-10-27-house-backdrop-2" }, { label: "ข่าวทำฉากวันแรก (26 ต.ค.)", url: "https://watpolprot-cloud.github.io/prot-m54-2569/#n=2569-10-26-house-backdrop" } ],
+  files: [ { label: "ภาพจดหมายข่าว ทำฉากวันที่ 4", path: "docs/2569/2569-10-29-house-backdrop-4.jpg" } ],
   src: "ครูที่ปรึกษา ม.5/4"
 },
 
