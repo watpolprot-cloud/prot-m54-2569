@@ -811,5 +811,57 @@
     window.addEventListener("keydown", function (e) { if (e.key === "Escape" && !box.hidden && $("#modal").hidden) open(false); }, true);
   })();
 
-  renderUrgent(); renderTodo(); renderBoard(); renderCal(); renderMembers(); fromHash();
+
+  /* ---------- การบ้านประจำสัปดาห์ (data/homework.js) ----------
+     ติ๊ก "ทำเสร็จแล้ว" เก็บใน localStorage ของเครื่องผู้ใช้เท่านั้น ไม่ส่งไปที่ใด */
+  var HW = window.M54_HW || { weeks: [] }, hwWeeks = (HW.weeks || []).slice().sort(function (a, b) { return b.week - a.week; }), hwCur = hwWeeks.length ? hwWeeks[0].week : 0;
+  var HWIMG = {}; ((SITE.timetable || {}).teachers || []).forEach(function (t) { HWIMG[t.name] = t.img; });
+  function hwKey(w, i) { return "m54hw:" + (HW.term || SITE.term) + ":w" + w + ":" + i; }
+  function hwGet(k) { try { return localStorage.getItem(k) === "1"; } catch (e) { return false; } }
+  function hwSet(k, v) { try { if (v) localStorage.setItem(k, "1"); else localStorage.removeItem(k); } catch (e) {} }
+  function hwRange(a, b) { var x = parse(a), y = parse(b); return x.getUTCMonth() === y.getUTCMonth() ? x.getUTCDate() + "–" + y.getUTCDate() + " " + MONTHS[y.getUTCMonth()] + " " + (y.getUTCFullYear() + 543) : thMed(a) + " – " + thMed(b); }
+  function hwAv(n) {
+    var im = HWIMG[n], ini = String(n || "").replace(/^ครู\s*/, "").charAt(0);
+    return im ? '<span class="tt-av"><img src="' + esc(im) + '" alt="" loading="lazy"></span>' : '<span class="tt-av tt-ini" aria-hidden="true">' + esc(ini) + "</span>";
+  }
+  function hwWords(s) { return String(s || "").split(" ").map(function (w) { return '<span class="nw">' + esc(w) + "</span>"; }).join(" "); }
+  function renderHW() {
+    var box = $("#hwBox"), wk = hwWeeks.filter(function (w) { return w.week === hwCur; })[0];
+    if (!wk) { box.innerHTML = '<div class="calm-box"><b>ยังไม่มีสรุปการบ้าน</b>เมื่อฝ่ายวิชาการของห้องส่งสรุปมา การบ้านของสัปดาห์จะขึ้นที่นี่</div>'; $("#hwWeeks").hidden = true; return; }
+    $("#hwWeeks").innerHTML = hwWeeks.map(function (w, i) {
+      return '<button class="chip" role="tab" data-hw="' + w.week + '" aria-selected="' + (w.week === hwCur) + '">สัปดาห์ที่ ' + w.week + (i === 0 ? " (ล่าสุด)" : "") + "<i>" + esc(hwRange(w.from, w.to)) + "</i></button>";
+    }).join("");
+    $("#hwWeeks").hidden = hwWeeks.length < 2;
+    $("#hwTitle").innerHTML = 'การบ้าน<span class="nw">สัปดาห์ที่ ' + wk.week + '</span> <span class="nw">' + esc(hwRange(wk.from, wk.to)) + "</span>";
+    var items = wk.items || [], done = items.filter(function (x, i) { return hwGet(hwKey(wk.week, i)); }).length;
+    var subj = []; items.forEach(function (x) { if (subj.indexOf(x.subj) < 0) subj.push(x.subj); });
+    var team = items.filter(function (x) { return x.mode === "pair" || x.mode === "group"; }).length, pct = items.length ? Math.round(done / items.length * 100) : 0;
+    var head = '<div class="hw-sum"><div class="hw-stat"><b>' + items.length + "</b><span>งาน</span></div><div class=\"hw-stat\"><b>" + subj.length + "</b><span>วิชา</span></div><div class=\"hw-stat\"><b>" + team + "</b><span>งานคู่/กลุ่ม</span></div>" +
+      '<div class="hw-prog"><div class="hw-prog-t"><b>ทำเสร็จแล้ว ' + done + " จาก " + items.length + " งาน</b><span>" + (done === items.length && items.length ? "ครบทุกงานแล้ว" : "ติ๊กได้ทีละงานด้านล่าง") + '</span></div><div class="hw-bar"><i style="width:' + pct + '%"></i></div></div></div>';
+    var cards = items.map(function (x, i) {
+      var on = hwGet(hwKey(wk.week, i)), tag = x.mode === "pair" ? "งานคู่" : x.mode === "group" ? "งานกลุ่ม" + (x.size ? " " + x.size + " คน" : "") : x.mode === "solo" ? "งานเดี่ยว" : "";
+      var tin = hwAv(x.teacher) + "<i>" + hwWords(x.teacher) + "</i>", u = tLink(x.teacher);
+      var due = x.due ? (function () { var d = diffDays(x.due, TODAY); return "ส่ง " + thMed(x.due) + (d > 1 ? " (อีก " + d + " วัน)" : d === 1 ? " (พรุ่งนี้)" : d === 0 ? " (วันนี้)" : ""); })() : "กำหนดส่งตามที่ครูผู้สอนแจ้ง";
+      return '<article class="hw-card' + (on ? " done" : "") + '" style="--i:' + i + '"><div class="hw-top"><span class="hw-no">' + pad2(i + 1) + '</span><span class="hw-subj">' + hwWords(x.subj) + "</span>" + (tag ? '<span class="hw-tag ' + esc(x.mode) + '">' + esc(tag) + "</span>" : "") + "</div>" +
+        "<h3>" + hwWords(x.task) + "</h3>" + (x.note ? '<p class="muted">' + tx(x.note) + "</p>" : "") +
+        '<div class="hw-foot">' + (u ? hl(u, tin, "tt-who") : '<span class="tt-who">' + tin + "</span>") + '<span class="hw-due' + (x.due ? " set" : "") + '">' + esc(due) + "</span></div>" +
+        '<button class="hw-check" data-hwi="' + i + '" aria-pressed="' + on + '">' + (on ? "ทำเสร็จแล้ว" : "กดเมื่อทำเสร็จ") + "</button></article>";
+    }).join("");
+    box.innerHTML = head + (wk.note ? '<p class="hw-note">' + tx(wk.note) + "</p>" : "") + '<div class="hw-grid">' + cards + "</div>" +
+      '<p class="hw-btns">' + (wk.image ? '<a class="btn gold small" href="' + esc(wk.image) + '" target="_blank" rel="noopener">ภาพสรุปการบ้านสัปดาห์นี้</a> ' : "") + '<button class="btn line small" data-hwlink="' + wk.week + '">คัดลอกลิงก์สัปดาห์นี้</button></p>' +
+      '<p class="muted hw-src">สรุปโดย ' + esc(HW.by || "ฝ่ายวิชาการของห้อง") + (wk.posted ? " · " + esc(thMed(wk.posted)) : "") + " · ถ้ารายละเอียดไม่ตรงกับที่ครูผู้สอนแจ้ง ให้ยึดตามครูผู้สอน</p>";
+  }
+  $("#hwWeeks").addEventListener("click", function (e) { var b = e.target.closest("[data-hw]"); if (!b) return; hwCur = +b.dataset.hw; renderHW(); });
+  $("#hwBox").addEventListener("click", function (e) {
+    var c = e.target.closest("[data-hwi]"); if (c) { var k = hwKey(hwCur, c.dataset.hwi); hwSet(k, !hwGet(k)); renderHW(); return; }
+    var l = e.target.closest("[data-hwlink]"); if (l) copy(location.origin + location.pathname + "#hw=" + l.dataset.hwlink, "คัดลอกลิงก์การบ้านแล้ว นำไปวางใน LINE ได้เลย");
+  });
+  function hwFromHash() {
+    var m = location.hash.match(/^#hw=(\d+)$/); if (!m) return;
+    if (hwWeeks.some(function (w) { return w.week === +m[1]; })) { hwCur = +m[1]; renderHW(); }
+    var sec = $("#homework"); if (sec) setTimeout(function () { sec.scrollIntoView(); }, 60);
+  }
+  window.addEventListener("hashchange", hwFromHash);
+
+  renderUrgent(); renderTodo(); renderBoard(); renderCal(); renderMembers(); renderHW(); fromHash(); hwFromHash();
 })();

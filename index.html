@@ -28,6 +28,7 @@
   </a>
   <nav class="topnav" aria-label="เมนูหลัก">
     <a href="#now">ต้องรู้ตอนนี้</a>
+    <a href="#homework">การบ้าน</a>
     <a href="#news">บอร์ดข่าวสาร</a>
     <a href="#calendar">ปฏิทิน</a>
     <a href="#timetable">ตารางเรียน</a>
@@ -101,6 +102,19 @@
       <p class="muted">ข้อมูลเหล่านี้ยังไม่ประกาศอย่างเป็นทางการ ครูจะแจ้งในกลุ่ม LINE และอัปเดตที่นี่ทันทีที่ได้รับ</p>
       <ul id="pendingList" class="pending-list"></ul>
     </div>
+  </div>
+</section>
+
+<!-- ============ HOMEWORK ============ -->
+<section class="sec hw" id="homework">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">การบ้านประจำสัปดาห์</p>
+      <h2 id="hwTitle">การบ้าน<span class="nw">ประจำสัปดาห์</span></h2>
+      <p class="sec-desc">ฝ่ายวิชาการของห้องสรุปการบ้านทุกวิชาให้ทุกสัปดาห์ กด "ทำเสร็จแล้ว" เพื่อติ๊กงานของตัวเอง (บันทึกไว้ในเครื่องที่ใช้เปิดเว็บเท่านั้น) และเลือกดูสัปดาห์ก่อนหน้าได้</p>
+    </div>
+    <div class="chips hw-weeks reveal" id="hwWeeks" role="tablist" aria-label="เลือกสัปดาห์"></div>
+    <div id="hwBox" class="reveal"></div>
   </div>
 </section>
 
@@ -282,6 +296,7 @@
 <nav class="bottomnav" aria-label="เมนูลัด">
   <a href="#home">หน้าแรก</a>
   <a href="#now">ต้องทำ</a>
+  <a href="#homework">การบ้าน</a>
   <a href="#news">ข่าว</a>
   <a href="#calendar">ปฏิทิน</a>
   <a href="#timetable">ตาราง</a>
@@ -302,6 +317,7 @@
 <script src="data/news-2-2569.js"></script>
 <script src="data/news-1-2569.js"></script>
 <script src="data/members.js"></script>
+<script src="data/homework.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
