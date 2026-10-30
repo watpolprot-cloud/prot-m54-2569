@@ -76,6 +76,24 @@ NEWS.forEach((n, i) => {
     else if (/[^\x20-\x7e]/.test(f.path)) warn(`${at}: ชื่อไฟล์ ${f.path} ควรเป็นภาษาอังกฤษล้วน`);
   });
 });
+/* การบ้านประจำสัปดาห์ (data/homework.js) */
+{
+  const HW = ctx.window.M54_HW, TN = ((SITE.timetable || {}).teachers || []).map((t) => t.name), seen = new Set();
+  ((HW && HW.weeks) || []).forEach((wk) => {
+    const at = `การบ้านสัปดาห์ที่ ${wk.week}`;
+    if (!Number.isInteger(wk.week) || wk.week < 1) err(`${at}: week ต้องเป็นตัวเลข 1, 2, 3 ...`);
+    if (seen.has(wk.week)) err(`${at}: เลขสัปดาห์ซ้ำ`); seen.add(wk.week);
+    for (const k of ["from", "to"]) if (!okDate(wk[k] || "")) err(`${at}: ${k} ต้องเป็น ค.ศ. แบบ 2026-11-02`);
+    if (wk.image && !fs.existsSync(path.join(ROOT, wk.image))) err(`${at}: ไม่พบภาพ ${wk.image}`);
+    if (!(wk.items || []).length) warn(`${at}: ยังไม่มีรายการงาน`);
+    (wk.items || []).forEach((x, i) => {
+      if (!x.subj || !x.task) err(`${at} งานที่ ${i + 1}: ต้องมี subj และ task`);
+      if (x.teacher && !TN.includes(x.teacher)) warn(`${at} งานที่ ${i + 1}: ชื่อ "${x.teacher}" ไม่ตรงกับครูในตารางเรียน (จะไม่มีรูปครู)`);
+      if (x.mode && !["solo", "pair", "group"].includes(x.mode)) err(`${at} งานที่ ${i + 1}: mode ใช้ได้ solo pair group หรือเว้นว่าง`);
+      if (x.due && !okDate(x.due)) err(`${at} งานที่ ${i + 1}: due ต้องเป็น ค.ศ. แบบ 2026-11-02`);
+    });
+  });
+}
 (SITE.teachers || []).forEach((t) => { if (t.link && !/^https:\/\//.test(t.link)) err(`site.js teachers: ลิงก์ของ ${t.name} ต้องขึ้นต้นด้วย https://`); });
 (SITE.calendar || []).forEach((c) => { if (!okDate(c.date || "")) err(`site.js calendar: วันที่ "${c.date}" ต้องเป็น ค.ศ. แบบ 2026-11-02`); });
 (SITE.countdowns || []).forEach((c) => {
