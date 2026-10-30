@@ -26,6 +26,24 @@
 window.M54_NEWS = window.M54_NEWS || [];
 window.M54_NEWS.push(
 {
+  id: "2569-10-30-space-expo-cubesat",
+  term: "2/2569",
+  date: "2026-10-30",
+  title: "Workshop ฟรี CubeSat System Modeling with SysML V2 ในงาน Thailand Space Expo 2026 (เสาร์ 31 ต.ค. 2569)",
+  cat: "chance",
+  to: ["student", "parent"],
+  urgent: true,
+  until: "2026-10-31",
+  summary: "ครูภัทราภรณ์ เตชะวิจิตร ฝากประชาสัมพันธ์ Workshop ฟรี ฝึกออกแบบระบบดาวเทียมขนาดเล็ก CubeSat ด้วย SysML V2 กิจกรรมเสริมในงาน Thailand Space Expo 2026 วันเสาร์ที่ 31 ต.ค. 2569 เวลา 13.00–15.00 น. ที่ไอคอนสยาม บรรยายภาษาอังกฤษ รับ 50 คน สมัครทางแบบฟอร์มออนไลน์",
+  body: "ครูภัทราภรณ์ เตชะวิจิตร ฝากประชาสัมพันธ์ Workshop ฟรี \"CubeSat System Modeling with SysML V2\" ซึ่งเป็นกิจกรรมเสริม (Side Event) ในงาน Thailand Space Expo 2026 จัดโดย GISTDA ร่วมกับ Space Faculty และ Dassault Systèmes เหมาะกับนักเรียนที่สนใจวิศวกรรมอวกาศและวิศวกรรมระบบ\n\nรายละเอียด\n- วันเสาร์ที่ 31 ตุลาคม 2569 เวลา 13.00–15.00 น.\n- ห้อง Meeting Room 3 (MR3) ชั้น 7 ICONSIAM Hall ไอคอนสยาม กรุงเทพฯ\n- บรรยายเป็นภาษาอังกฤษ รับ 50 คน ไม่มีค่าใช้จ่าย\n- ผู้จัดแนะนำว่าควรมีพื้นฐานหลักการวิศวกรรมระบบ (Systems Engineering) เบื้องต้น\n\nเนื้อหา 3 ช่วง\n- 13.00–13.40 น. พื้นฐาน MBSE และภาษา SysML V2\n- 13.40–14.20 น. โครงสร้างระบบของดาวเทียม CubeSat (ระบบย่อย ส่วนประกอบ และการเชื่อมต่อ)\n- 14.20–15.00 น. พฤติกรรมของระบบ ภารกิจ และการกำหนดความต้องการทางวิศวกรรม\n\nการสมัคร: สแกนคิวอาร์โค้ดบนภาพ หรือกดลิงก์แบบฟอร์มด้านล่าง ในแบบฟอร์มมีช่องสถานะ \"นักเรียนมัธยมปลาย\" ให้เลือก\n\nหมายเหตุ: โปสเตอร์ระบุให้สมัครภายใน 5 ตุลาคม 2569 แต่เมื่อตรวจวันที่ 30 ตุลาคม 2569 แบบฟอร์มยังเปิดรับอยู่ ที่นั่งมีจำกัด นักเรียนที่สนใจควรสมัครโดยเร็ว และแจ้งผู้ปกครองก่อนเดินทาง\n\nสอบถามผู้จัด: Academic Collaboration Division, GISTDA อีเมล iand@gistda.or.th\n\nที่มา: ครูภัทราภรณ์ เตชะวิจิตร ฝากประชาสัมพันธ์ วันที่ 30 ตุลาคม 2569",
+  todo: [ { text: "สมัคร Workshop CubeSat (ถ้าสนใจ) ทางแบบฟอร์มออนไลน์", due: "2026-10-31", who: "student" } ],
+  event: { start: "2026-10-31", end: "", time: "13.00–15.00\u00a0น.", place: "ห้อง MR3 ชั้น 7 ICONSIAM Hall ไอคอนสยาม" },
+  links: [ { label: "แบบฟอร์มสมัคร Workshop", url: "https://forms.gle/ZVCcsixTjUa2b6Tp9" }, { label: "Thailand Space Expo 2026 (ลิงก์ที่ได้รับ)", url: "https://share.google/hkCOMDhR3sdZJzcrt" } ],
+  files: [ { label: "ภาพสรุปภาษาไทย", path: "docs/2569/2569-10-30-space-expo-cubesat-info.jpg" }, { label: "โปสเตอร์ต้นฉบับ", path: "docs/2569/2569-10-30-space-expo-cubesat.jpg" } ],
+  src: "LINE นักเรียนและผู้ปกครอง"
+},
+
+{
   id: "2569-10-29-performance-show",
   term: "2/2569",
   date: "2026-10-29",
