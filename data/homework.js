@@ -5,6 +5,7 @@
    - teacher: ต้องตรงกับชื่อใน timetable.teachers ของ site.js เว็บจะดึงรูปครูให้เอง
    - mode: "pair" งานคู่ · "group" งานกลุ่ม (ใส่ size จำนวนคน) · "solo" งานเดี่ยว · ว่าง = ไม่ได้ระบุ
    - due: กำหนดส่ง ค.ศ. YYYY-MM-DD (ไม่ทราบให้เว้นว่าง เว็บจะเขียนว่า "ตามที่ครูผู้สอนแจ้ง") ห้ามเดา
+   - art: ชื่อภาพประกอบใน data/hw-art.js ที่ตรงกับเนื้องาน (งานใหม่ที่ไม่มีภาพตรง ให้วาดภาพเพิ่มในไฟล์นั้น ไม่ใส่ = ภาพ general)
    - image: ภาพ info ของสัปดาห์นั้น (ถ้ามี) เก็บที่ docs/2569/hw/
    ลิงก์ตรงของแต่ละสัปดาห์: #hw=เลขสัปดาห์ เช่น #hw=1
    ========================================================= */
@@ -14,16 +15,16 @@ window.M54_HW = {
   weeks: [
     {
       week: 1, from: "2026-10-26", to: "2026-10-30", posted: "2026-10-30",
-      image: "docs/2569/hw/hw-2569-2-w01.jpg",
+      image: "docs/2569/hw/hw-2569-2-w01-v2.jpg",
       note: "",
       items: [
-        { subj: "ภาษาไทย", teacher: "ครูอาคม", task: "ท่องบทอาขยาน เรื่อง ลิลิตตะเลงพ่าย", mode: "pair", due: "" },
-        { subj: "ภาษาอังกฤษ", teacher: "ครูสุพัตรา", task: "จด Vocabulary Unit 6b", mode: "", due: "" },
-        { subj: "ภาษาอังกฤษเพื่อการสื่อสาร", teacher: "ครู Karl Patrick Soriano", task: "My school break story", mode: "", due: "" },
-        { subj: "ภาษาอังกฤษเพื่อการท่องเที่ยว", teacher: "ครูพรนภา", task: "ทำสไลด์เกี่ยวกับจังหวัดที่เลือก และเตรียมนำเสนอ", mode: "pair", due: "" },
-        { subj: "ภาษาอังกฤษเพื่อการท่องเที่ยว", teacher: "ครูพรนภา", task: "ทำ vlog ไปเที่ยว", mode: "group", size: 8, due: "" },
-        { subj: "การงานอาชีพ", teacher: "ครูกมลวรรณ", task: "สร้างโปรไฟล์ส่วนตัว", mode: "", due: "" },
-        { subj: "วิทยาการคำนวณ", teacher: "ครูบังอร", task: "ออกแบบโปรแกรมรักสุขภาพ 7 วัน", mode: "", due: "" }
+        { subj: "ภาษาไทย", teacher: "ครูอาคม", task: "ท่องบทอาขยาน เรื่อง ลิลิตตะเลงพ่าย", art: "recite", mode: "pair", due: "" },
+        { subj: "ภาษาอังกฤษ", teacher: "ครูสุพัตรา", task: "จด Vocabulary Unit 6b", art: "vocab", mode: "", due: "" },
+        { subj: "ภาษาอังกฤษเพื่อการสื่อสาร", teacher: "ครู Karl Patrick Soriano", task: "My school break story", art: "story", mode: "", due: "" },
+        { subj: "ภาษาอังกฤษเพื่อการท่องเที่ยว", teacher: "ครูพรนภา", task: "ทำสไลด์เกี่ยวกับจังหวัดที่เลือก และเตรียมนำเสนอ", art: "slides", mode: "pair", due: "" },
+        { subj: "ภาษาอังกฤษเพื่อการท่องเที่ยว", teacher: "ครูพรนภา", task: "ทำ vlog ไปเที่ยว", art: "vlog", mode: "group", size: 8, due: "" },
+        { subj: "การงานอาชีพ", teacher: "ครูกมลวรรณ", task: "สร้างโปรไฟล์ส่วนตัว", art: "profile", mode: "", due: "" },
+        { subj: "วิทยาการคำนวณ", teacher: "ครูบังอร", task: "ออกแบบโปรแกรมรักสุขภาพ 7 วัน", art: "health", mode: "", due: "" }
       ]
     }
   ]
