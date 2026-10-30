@@ -825,6 +825,8 @@
     return im ? '<span class="tt-av"><img src="' + esc(im) + '" alt="" loading="lazy"></span>' : '<span class="tt-av tt-ini" aria-hidden="true">' + esc(ini) + "</span>";
   }
   function hwWords(s) { return String(s || "").split(" ").map(function (w) { return '<span class="nw">' + esc(w) + "</span>"; }).join(" "); }
+  /* ชื่อวิชายาวให้ขึ้นบรรทัดใหม่ได้เฉพาะหน้าคำว่า "เพื่อ" (กันตัดคำไทยกลางคำ) */
+  function hwSubj(s) { return String(s || "").split(/(?=เพื่อ)/).map(function (w) { return '<span class="nw">' + esc(w) + "</span>"; }).join("<wbr>"); }
   function renderHW() {
     var box = $("#hwBox"), wk = hwWeeks.filter(function (w) { return w.week === hwCur; })[0];
     if (!wk) { box.innerHTML = '<div class="calm-box"><b>ยังไม่มีสรุปการบ้าน</b>เมื่อฝ่ายวิชาการของห้องส่งสรุปมา การบ้านของสัปดาห์จะขึ้นที่นี่</div>'; $("#hwWeeks").hidden = true; return; }
@@ -842,10 +844,13 @@
       var on = hwGet(hwKey(wk.week, i)), tag = x.mode === "pair" ? "งานคู่" : x.mode === "group" ? "งานกลุ่ม" + (x.size ? " " + x.size + " คน" : "") : x.mode === "solo" ? "งานเดี่ยว" : "";
       var tin = hwAv(x.teacher) + "<i>" + hwWords(x.teacher) + "</i>", u = tLink(x.teacher);
       var due = x.due ? (function () { var d = diffDays(x.due, TODAY); return "ส่ง " + thMed(x.due) + (d > 1 ? " (อีก " + d + " วัน)" : d === 1 ? " (พรุ่งนี้)" : d === 0 ? " (วันนี้)" : ""); })() : "กำหนดส่งตามที่ครูผู้สอนแจ้ง";
-      return '<article class="hw-card' + (on ? " done" : "") + '" style="--i:' + i + '"><div class="hw-top"><span class="hw-no">' + pad2(i + 1) + '</span><span class="hw-subj">' + hwWords(x.subj) + "</span>" + (tag ? '<span class="hw-tag ' + esc(x.mode) + '">' + esc(tag) + "</span>" : "") + "</div>" +
-        "<h3>" + hwWords(x.task) + "</h3>" + (x.note ? '<p class="muted">' + tx(x.note) + "</p>" : "") +
+      var tone = (window.M54_HW_TONES || {})[x.subj] || ["#3d2466", "#6a44a3"], art = (window.M54_HW_ART || {})[x.art] || (window.M54_HW_ART || {}).general || "";
+      return '<article class="hw-card' + (on ? " done" : "") + '" style="--i:' + i + ";--c1:" + esc(tone[0]) + ";--c2:" + esc(tone[1]) + '">' +
+        '<div class="hw-art"><div class="hw-top"><span class="hw-no">' + pad2(i + 1) + '</span>' + (tag ? '<span class="hw-tag ' + esc(x.mode) + '">' + esc(tag) + "</span>" : "") + '</div><span class="hw-subj">' + hwSubj(x.subj) + "</span>" +
+        (art ? '<svg class="hw-ill" viewBox="0 0 120 120" aria-hidden="true" focusable="false">' + art + "</svg>" : "") + (on ? '<span class="hw-stamp">เสร็จแล้ว</span>' : "") + "</div>" +
+        '<div class="hw-body"><h3>' + hwWords(x.task) + "</h3>" + (x.note ? '<p class="muted">' + tx(x.note) + "</p>" : "") +
         '<div class="hw-foot">' + (u ? hl(u, tin, "tt-who") : '<span class="tt-who">' + tin + "</span>") + '<span class="hw-due' + (x.due ? " set" : "") + '">' + esc(due) + "</span></div>" +
-        '<button class="hw-check" data-hwi="' + i + '" aria-pressed="' + on + '">' + (on ? "ทำเสร็จแล้ว" : "กดเมื่อทำเสร็จ") + "</button></article>";
+        '<button class="hw-check" data-hwi="' + i + '" aria-pressed="' + on + '">' + (on ? "ทำเสร็จแล้ว" : "กดเมื่อทำเสร็จ") + "</button></div></article>";
     }).join("");
     box.innerHTML = head + (wk.note ? '<p class="hw-note">' + tx(wk.note) + "</p>" : "") + '<div class="hw-grid">' + cards + "</div>" +
       '<p class="hw-btns">' + (wk.image ? '<a class="btn gold small" href="' + esc(wk.image) + '" target="_blank" rel="noopener">ภาพสรุปการบ้านสัปดาห์นี้</a> ' : "") + '<button class="btn line small" data-hwlink="' + wk.week + '">คัดลอกลิงก์สัปดาห์นี้</button></p>' +

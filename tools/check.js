@@ -90,6 +90,8 @@ NEWS.forEach((n, i) => {
       if (!x.subj || !x.task) err(`${at} งานที่ ${i + 1}: ต้องมี subj และ task`);
       if (x.teacher && !TN.includes(x.teacher)) warn(`${at} งานที่ ${i + 1}: ชื่อ "${x.teacher}" ไม่ตรงกับครูในตารางเรียน (จะไม่มีรูปครู)`);
       if (x.mode && !["solo", "pair", "group"].includes(x.mode)) err(`${at} งานที่ ${i + 1}: mode ใช้ได้ solo pair group หรือเว้นว่าง`);
+      if (x.art && !(ctx.window.M54_HW_ART || {})[x.art]) err(`${at} งานที่ ${i + 1}: ไม่มีภาพประกอบชื่อ "${x.art}" ใน data/hw-art.js`);
+      if (!x.art) warn(`${at} งานที่ ${i + 1}: ยังไม่ได้เลือกภาพประกอบ (art) จะใช้ภาพ general`);
       if (x.due && !okDate(x.due)) err(`${at} งานที่ ${i + 1}: due ต้องเป็น ค.ศ. แบบ 2026-11-02`);
     });
   });
