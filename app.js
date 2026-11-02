@@ -516,6 +516,25 @@
     }
   })();
 
+  /* ---------- เวรทำความสะอาดประจำวัน (SITE.duty) ---------- */
+  (function () {
+    var du = SITE.duty, box = $("#dutyBox"), sec = $("#duty");
+    if (!du || !du.days) { if (sec) sec.hidden = true; return; }
+    var wd = DAYS[parse(TODAY).getUTCDay()], order = ["จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์"];
+    $("#dutyDesc").textContent = (du.check || "") + (du.from ? " เริ่มตั้งแต่" + thLong(du.from) : "");
+    var card = function (d) {
+      var list = (du.days[d] || []).map(stu).filter(Boolean), today = d === wd;
+      return '<div class="duty-day d' + order.indexOf(d) + (today ? " today" : "") + '"><div class="duty-h"><b>วัน' + d + "</b>" + (today ? '<span class="duty-now">เวรวันนี้</span>' : "") + "<small>" + list.length + " คน</small></div>" +
+        '<div class="duty-ppl">' + list.map(function (s) {
+          var np = nameParts(s);
+          return '<button class="duty-p" data-student="' + s.no + '" aria-label="เปิดแฟ้มผลงานของ ' + esc(s.pre + s.name) + '"><span class="dph">' + photoHtml(s) + "</span><b>" + esc(np.first) + "</b><small>" + esc(np.last) + "</small></button>";
+        }).join("") + "</div></div>";
+    };
+    box.innerHTML = '<div class="duty-grid">' + order.map(card).join("") + "</div>" +
+      ((du.tasks || []).length ? '<ol class="duty-tasks">' + du.tasks.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ol>" : "") +
+      '<p class="tt-btns">' + (du.image ? '<a class="btn gold small" href="' + esc(du.image) + '" target="_blank" rel="noopener">ภาพเวรประจำวันแบบมีรูป</a> ' : "") + (du.news ? '<a class="btn line small" href="#n=' + esc(du.news) + '">อ่านประกาศ</a>' : "") + "</p>";
+  })();
+
   /* ---------- docs ---------- */
   (function () {
     var groups = {}; (SITE.docs || []).forEach(function (d) { (groups[d.group] = groups[d.group] || []).push(d); });
