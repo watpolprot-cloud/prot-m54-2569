@@ -74,6 +74,7 @@ window.M54_NEWS.push(
     { t: "ภาพหมู่ช่วงเย็น", n: 10 }
   ] },
   links: [ { label: "ข่าวทำฉากวันที่ 7 (4 พ.ย.)", url: "https://watpolprot-cloud.github.io/prot-m54-2569/#n=2569-11-04-house-backdrop-7" }, { label: "ข่าวทำฉากวันที่ 6 (3 พ.ย.)", url: "https://watpolprot-cloud.github.io/prot-m54-2569/#n=2569-11-03-house-backdrop-6" }, { label: "ข่าวทำฉากวันแรก (26 ต.ค.)", url: "https://watpolprot-cloud.github.io/prot-m54-2569/#n=2569-10-26-house-backdrop" } ],
+  files: [ { label: "ภาพจดหมายข่าว ทำฉากวันที่ 8", path: "docs/2569/2569-11-05-house-backdrop-8.jpg" } ],
   src: "ครูที่ปรึกษา ม.5/4"
 },
 {
