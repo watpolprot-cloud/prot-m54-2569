@@ -208,6 +208,7 @@
 ไฟล์แนบ: สีเขียวอันดับ 1 วันที่ 5 พ.ย. https://watpolprot-cloud.github.io/prot-m54-2569/docs/2569/2569-11-05-house-lineup-first-info.jpg
 ไฟล์แนบ: ประกาศผลการเข้าแถวคณะสี 5 พ.ย. 2569 https://watpolprot-cloud.github.io/prot-m54-2569/docs/2569/2569-11-05-house-lineup-result.jpg
 ไฟล์แนบ: ประกาศผลการเข้าแถวคณะสี 6 พ.ย. 2569 https://watpolprot-cloud.github.io/prot-m54-2569/docs/2569/2569-11-06-house-lineup-result.jpg
+ไฟล์แนบ: สรุปผลเข้าแถว 6 พ.ย. สำหรับ ม.5/4 https://watpolprot-cloud.github.io/prot-m54-2569/docs/2569/2569-11-06-house-lineup-info.jpg
 
 ## คลิปบรรยากาศ ทำฉากคณะสีกระดังงา วัน⁠ที่ 8 ม.5/4 (5 พ.ย. 2569)
 ลิงก์ #n=2569-11-05-house-backdrop-8 · ประกาศ วันพฤหัสบดีที่ 5 พ.ย. 2569 · ภาคเรียน 2/2569 · หมวด คณะสีกระดังงา · ถึง นักเรียน และ ผู้ปกครอง · จาก ครูที่ปรึกษา ม.5/4
@@ -334,6 +335,7 @@
 ลิงก์: คลิปแนะนำสถานที่ (Facebook) https://www.facebook.com/share/r/1F5b5anpWx/?mibextid=wwXIfr
 ลิงก์: คลิปแนะนำสถานที่ (Instagram) https://www.instagram.com/reel/DfYjI4wh3q6/?psln=MTY4NXFyM2w4ZGJzbQ==
 ลิงก์: ค่าบำรุงการศึกษา ม.5 ภาคเรียนที่ 2/2569 https://watpolprot-cloud.github.io/prot-m54-2569/#n=2569-11-02-tuition-2-2569
+ไฟล์แนบ: บัตรนำทางผู้ปกครอง ม.5/4 สแกน Google Maps และคลิปแนะนำสถานที่ https://watpolprot-cloud.github.io/prot-m54-2569/docs/2569/2569-11-06-parent-pass-info.jpg
 ไฟล์แนบ: การเดินทางและจุดจอดรถ (ประกาศโรงเรียน 6 พ.ย.) https://watpolprot-cloud.github.io/prot-m54-2569/docs/2569/2569-11-06-parent-meeting-parking-map.jpg
 ไฟล์แนบ: สรุปกำหนดการสำหรับผู้ปกครอง ม.5/4 (อัปเดต 4 พ.ย.) https://watpolprot-cloud.github.io/prot-m54-2569/docs/2569/2569-11-04-parent-meeting-m54-info.jpg
 ไฟล์แนบ: ค่าบำรุงการศึกษา ม.5/4 และช่องทางชำระ (อัปเดต 4 พ.ย.) https://watpolprot-cloud.github.io/prot-m54-2569/docs/2569/2569-11-04-tuition-m54-info.jpg
@@ -458,6 +460,7 @@
 ลิงก์: ประกาศอัตราค่าบำรุงการศึกษา 2/2569 https://drive.google.com/file/d/1sBod4WtEs6LTw_Dg0Kk4lk7oAMJxfgdh/view?usp=sharing
 ลิงก์: ขั้นตอนตรวจสอบและชำระเงิน https://drive.google.com/file/d/1vIAXj0Q8hoEdrNo3ADwIweACVzgg2NCX/view?usp=drivesdk
 ลิงก์: มาตรการช่วยเหลือผู้ได้รับผลกระทบจากอุทกภัย ลด 500 บาท https://watpolprot-cloud.github.io/prot-m54-2569/#n=2569-10-31-flood-aid
+ไฟล์แนบ: จ่ายค่าบำรุงผ่านมือถือ 5 ขั้น (ภาพสรุปสำหรับ ม.5/4) https://watpolprot-cloud.github.io/prot-m54-2569/docs/2569/2569-11-06-school-billing-info.jpg
 ไฟล์แนบ: วิธีชำระค่าบำรุงการศึกษาด้วยระบบ School Billing 5 ขั้นตอน (งานการเงิน 6 พ.ย.) https://watpolprot-cloud.github.io/prot-m54-2569/docs/2569/2569-11-06-school-billing-guide.jpg
 ไฟล์แนบ: ค่าบำรุงการศึกษา ม.5/4 และช่องทางชำระ (อัปเดต 4 พ.ย.) https://watpolprot-cloud.github.io/prot-m54-2569/docs/2569/2569-11-04-tuition-m54-info.jpg
 ไฟล์แนบ: ยอดค่าบำรุงการศึกษา ม.5 (อัปเดต 3 พ.ย.) https://watpolprot-cloud.github.io/prot-m54-2569/docs/2569/2569-11-03-tuition-m5-info.jpg
