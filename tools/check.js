@@ -71,6 +71,20 @@ NEWS.forEach((n, i) => {
     if (n.event.end && !okDate(n.event.end)) err(`${at}: event.end ต้องเป็น ค.ศ. แบบ 2026-11-02`);
   }
   (n.links || []).forEach((l) => { if (!/^https:\/\//.test(l.url || "")) err(`${at}: ลิงก์ "${l.label}" ต้องขึ้นต้นด้วย https://`); });
+  /* สื่อในข่าว: ตรวจว่าไฟล์ภาพ คลิป และคลิปที่ตัดต่อมีจริง และลิงก์ Google Drive ถูกรูปแบบ */
+  const has = (p) => fs.existsSync(path.join(ROOT, p)), p2 = (k) => String(k).padStart(2, "0");
+  if (n.video && n.video.path) {
+    if (!has(n.video.path)) err(`${at}: ไม่พบคลิป ${n.video.path}`);
+    if (n.video.poster && !has(n.video.poster)) err(`${at}: ไม่พบภาพปกคลิป ${n.video.poster}`);
+  }
+  if (n.clips && n.clips.n) for (let k = 1; k <= n.clips.n; k++) for (const f of [`c${p2(k)}.mp4`, `cp${p2(k)}.jpg`]) if (!has(n.clips.dir + f)) err(`${at}: ไม่พบคลิปกิจกรรม ${n.clips.dir + f}`);
+  if (n.gallery && n.gallery.groups) {
+    const total = n.gallery.groups.reduce((s, g) => s + g.n, 0);
+    for (let k = 1; k <= total; k++) for (const f of [`${p2(k)}.jpg`, `t${p2(k)}.jpg`]) if (!has(n.gallery.dir + f)) err(`${at}: ไม่พบภาพ ${n.gallery.dir + f}`);
+    if (total > 12) warn(`${at}: มีภาพ ${total} ภาพ เว็บมีพื้นที่จำกัด ควรคัดไว้ไม่เกิน 8 ภาพ แล้วใส่ album ลิงก์ไปโฟลเดอร์ Google Drive`);
+  }
+  if (n.clips && n.clips.n > 4) warn(`${at}: มีคลิปกิจกรรม ${n.clips.n} คลิป ควรคัดไว้ไม่เกิน 2 คลิป แล้วใส่ album ลิงก์ไปโฟลเดอร์ Google Drive`);
+  [].concat(n.album || []).forEach((a) => { if (!/^https:\/\/drive\.google\.com\//.test(a.url || "")) err(`${at}: album ต้องเป็นลิงก์ https://drive.google.com/...`); });
   (n.files || []).forEach((f) => {
     if (!f.path || !fs.existsSync(path.join(ROOT, f.path))) err(`${at}: ไม่พบไฟล์แนบ ${f.path}`);
     else if (/[^\x20-\x7e]/.test(f.path)) warn(`${at}: ชื่อไฟล์ ${f.path} ควรเป็นภาษาอังกฤษล้วน`);

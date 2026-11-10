@@ -586,6 +586,9 @@ a.hl.tt-who{color:var(--p700)}
 .m-gallery h4 small{font-family:var(--body);font-weight:400;font-size:13px;color:var(--muted);margin-left:6px}
 .m-gallery h5{font-family:var(--head);font-size:14px;font-weight:500;color:var(--ink);margin:14px 0 8px}
 .g-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.m-album{margin:4px 0 18px;padding:16px;border:1px solid var(--p300);border-radius:14px;background:var(--p100);text-align:center}
+.m-album .btn{margin:4px;white-space:normal;text-align:center}
+.m-album p{margin:8px 0 0;font-size:13px;color:var(--muted)}
 .g-grid a{display:block;aspect-ratio:4/3;overflow:hidden;border-radius:10px;border:1px solid var(--line);background:var(--paper)}
 .g-grid img{width:100%;height:100%;object-fit:cover;object-position:50% 35%;transition:transform .3s}
 .g-grid a:hover img{transform:scale(1.04)}

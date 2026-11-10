@@ -117,6 +117,7 @@ function build() {
     if (n.body && clean(n.body) !== clean(n.summary)) L.push(clean(n.body));
     if (n.event && n.event.start) L.push(`วันกิจกรรม: ${thDate(n.event.start, true)}${n.event.end && n.event.end !== n.event.start ? " ถึง " + thDate(n.event.end, true) : ""}${n.event.time ? " เวลา " + n.event.time : ""}${n.event.place ? " ที่ " + n.event.place : ""}`);
     (n.todo || []).forEach((t) => L.push(`สิ่งที่ต้องทำ (${WHO[t.who] || "ทุกคน"}): ${t.text}${t.due ? " กำหนด " + thDate(t.due, true) : ""}`));
+    [].concat(n.album || []).forEach((a) => L.push(`${a.label || "ภาพและคลิปทั้งหมด (Google Drive)"}: ${a.url}`));
     (n.links || []).forEach((l) => L.push(`ลิงก์: ${l.label} ${abs(l.url)}`));
     (n.files || []).forEach((f) => L.push(`ไฟล์แนบ: ${f.label || "ไฟล์"} ${abs(f.path)}`));
   });

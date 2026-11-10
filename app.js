@@ -368,11 +368,17 @@
     }
     if (n.gallery && n.gallery.groups) {
       var gi = 0, gd = n.gallery.dir || "";
-      h += '<div class="m-gallery"><h4>ภาพกิจกรรม ' + n.gallery.groups.reduce(function (s, g) { return s + g.n; }, 0) + ' ภาพ <small>กดที่ภาพเพื่อดูขนาดเต็ม</small></h4>' + n.gallery.groups.map(function (g) {
+      h += '<div class="m-gallery"><h4>' + (n.album ? "ภาพที่คัดมา " : "ภาพกิจกรรม ") + n.gallery.groups.reduce(function (s, g) { return s + g.n; }, 0) + ' ภาพ <small>กดที่ภาพเพื่อดูขนาดเต็ม</small></h4>' + n.gallery.groups.map(function (g) {
         var cells = "";
-        for (var k = 0; k < g.n; k++) { gi++; var nn = pad2(gi); cells += '<a href="' + esc(gd + nn + ".jpg") + '" target="_blank" rel="noopener"><img src="' + esc(gd + "t" + nn + ".jpg") + '" alt="' + esc(g.t) + '" loading="lazy"></a>'; }
+        for (var k = 0; k < g.n; k++) { gi++; var nn = pad2(gi); cells += '<a href="' + esc(gd + nn + ".jpg") + '" target="_blank" rel="noopener"><img src="' + esc(gd + "t" + nn + ".jpg") + '" alt="' + esc(g.t || "ภาพกิจกรรม " + n.title) + '" loading="lazy"></a>'; }
         return (g.t ? "<h5>" + tx(g.t) + "</h5>" : "") + '<div class="g-grid">' + cells + "</div>";
       }).join("") + "</div>";
+    }
+    // album: ภาพและคลิปทั้งหมดอยู่ใน Google Drive เว็บเก็บไว้เฉพาะที่คัดมา เพื่อประหยัดพื้นที่เว็บ (ใส่ได้ทั้ง { url, label } หรือเป็นรายการ)
+    if (n.album) {
+      h += '<div class="m-album">' + [].concat(n.album).map(function (a) {
+        return '<a class="btn gold small" href="' + esc(a.url) + '" target="_blank" rel="noopener">' + esc(a.label || "ดูภาพและคลิปทั้งหมดใน Google Drive") + "</a>";
+      }).join("") + "<p>เปิดดูและดาวน์โหลดได้ทุกไฟล์ โดยไม่ต้องเข้าสู่ระบบ</p></div>";
     }
     if (n.links && n.links.length) {
       h += '<div class="m-box"><h4>ลิงก์ที่เกี่ยวข้อง</h4><div class="m-links">' + n.links.map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + "</a>"; }).join("") + "</div></div>";
