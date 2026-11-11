@@ -73,6 +73,10 @@ function build() {
 
   h("เรื่องที่ยังรอโรงเรียนประกาศ");
   (S.pending || []).forEach((p) => L.push(`- ${p.title}: ${p.note}`));
+  if ((S.announced || []).length) {
+    h("เรื่องที่เคยรอประกาศ และโรงเรียนประกาศแล้ว");
+    S.announced.forEach((a) => L.push(`- ${a.title} (ประกาศแล้ว${a.date ? " " + thDate(a.date) : ""}): ` + (a.note ? a.note + " " : "") + (a.facts || []).map((f) => `${f.k} ${f.v}`).join(" · ") + (a.src ? ` · ที่มา ${a.src}` : "") + (a.link ? " · " + abs(a.link) : "")));
+  }
 
   h("ตารางเรียนและการแต่งกาย");
   const T = S.timetable;
