@@ -164,6 +164,21 @@ span.nw{display:inline!important;font-size:inherit!important;font-weight:inherit
 .pending-list b{display:block;font-family:var(--head);font-weight:500}
 .pending-list span{font-size:14px;color:#cfc4e2}
 .pending-list .wait{display:inline-block;margin-top:6px;font-family:var(--head);font-size:12px;color:var(--ink);background:var(--gold);padding:1px 10px;border-radius:999px;animation:blink 2.4s ease-in-out infinite}
+.announced{position:relative;margin-top:18px;padding-top:16px;border-top:1px dashed rgba(255,255,255,.18)}
+.announced h4{font-size:17px;color:var(--gold2)}
+.announced .muted{font-size:14px;margin:2px 0 0}
+.announced-list{list-style:none;padding:0;margin:12px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:10px}
+.announced-list li>a,.announced-list li>.in{display:block;height:100%;padding:14px 16px;border-radius:12px;color:#fff;text-decoration:none;background:linear-gradient(135deg,rgba(234,178,59,.16),rgba(255,255,255,.05));border:1px solid rgba(234,178,59,.55);transition:transform .2s,border-color .2s,background .2s}
+.announced-list li>a:hover{transform:translateY(-2px);border-color:var(--gold);background:linear-gradient(135deg,rgba(234,178,59,.24),rgba(255,255,255,.07))}
+.announced-list .done{display:inline-block;margin-bottom:6px;font-family:var(--head);font-size:12px;font-weight:500;color:var(--gold2);border:1px solid var(--gold);padding:1px 10px;border-radius:999px}
+.announced-list b{display:block;font-family:var(--head);font-weight:500;font-size:17px}
+.announced-list dl{margin:8px 0 0;display:grid;grid-template-columns:max-content 1fr;gap:4px 16px;font-size:14px;line-height:1.5}
+.announced-list dl div{display:contents}
+.announced-list dt{color:#cfc4e2}
+.announced-list dd{margin:0;color:#fff;font-weight:600}
+.announced-list .src{display:block;margin-top:8px;font-size:12px;color:#b9a9d4}
+.announced-list .more{display:inline-block;margin-top:8px;font-family:var(--head);font-size:14px;font-weight:500;color:var(--gold2);border-bottom:1px solid rgba(246,214,132,.5)}
+@media (max-width:520px){.announced-list dl{grid-template-columns:1fr;row-gap:0}.announced-list dd{margin-bottom:4px}}
 @keyframes blink{50%{opacity:.55}}
 
 /* ---------- homework (การบ้านประจำสัปดาห์) ---------- */

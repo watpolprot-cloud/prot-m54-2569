@@ -271,8 +271,19 @@
   });
   (function () {
     var p = SITE.pending || [];
-    if (!p.length) { $("#pendingBox").hidden = true; return; }
-    $("#pendingList").innerHTML = p.map(function (x) { return "<li><b>" + tx(x.title) + "</b><span>" + tx(x.note || "") + '</span><br><span class="wait">รอประกาศ</span></li>'; }).join("");
+    var a = (SITE.announced || []).filter(function (x) { return !x.until || x.until >= TODAY; });
+    if (!p.length && !a.length) { $("#pendingBox").hidden = true; return; }
+    if (p.length) $("#pendingList").innerHTML = p.map(function (x) { return "<li><b>" + tx(x.title) + "</b><span>" + tx(x.note || "") + '</span><br><span class="wait">รอประกาศ</span></li>'; }).join("");
+    else { $("#pendingList").hidden = true; $("#pendingBox > h3").hidden = true; $("#pendingBox > p").hidden = true; }
+    if (!a.length) return;
+    $("#announcedWrap").hidden = false;
+    $("#announcedList").innerHTML = a.map(function (x) {
+      var facts = (x.facts || []).map(function (f) { return "<div><dt>" + tx(f.k) + "</dt><dd>" + tx(f.v) + "</dd></div>"; }).join("");
+      var inner = '<span class="done">ประกาศแล้ว' + (x.date ? " " + parse(x.date).getUTCDate() + " " + MON[parse(x.date).getUTCMonth()] + " " + (parse(x.date).getUTCFullYear() + 543) : "") + "</span><b>" + tx(x.title) + "</b>" +
+        (x.note ? "<span>" + tx(x.note) + "</span>" : "") + (facts ? "<dl>" + facts + "</dl>" : "") +
+        (x.src ? '<small class="src">ที่มา: ' + tx(x.src) + "</small>" : "") + (x.link ? '<span class="more">อ่านรายละเอียดและวิธีชำระ</span>' : "");
+      return "<li>" + (x.link ? '<a href="' + esc(x.link) + '">' + inner + "</a>" : '<div class="in">' + inner + "</div>") + "</li>";
+    }).join("");
   })();
 
   /* ---------- board ---------- */
