@@ -867,10 +867,10 @@
     var box = $("#hwBox"), wk = hwWeeks.filter(function (w) { return w.week === hwCur; })[0];
     if (!wk) { box.innerHTML = '<div class="calm-box"><b>ยังไม่มีสรุปการบ้าน</b>เมื่อฝ่ายวิชาการของห้องส่งสรุปมา การบ้านของสัปดาห์จะขึ้นที่นี่</div>'; $("#hwWeeks").hidden = true; return; }
     $("#hwWeeks").innerHTML = hwWeeks.map(function (w, i) {
-      return '<button class="chip" role="tab" data-hw="' + w.week + '" aria-selected="' + (w.week === hwCur) + '">สัปดาห์ที่ ' + w.week + (i === 0 ? " (ล่าสุด)" : "") + "<i>" + esc(hwRange(w.from, w.to)) + "</i></button>";
+      return '<button class="chip" role="tab" data-hw="' + w.week + '" aria-selected="' + (w.week === hwCur) + '">สัปดาห์ที่ ' + esc(w.label || w.week) + (i === 0 ? " (ล่าสุด)" : "") + "<i>" + esc(hwRange(w.from, w.to)) + "</i></button>";
     }).join("");
     $("#hwWeeks").hidden = hwWeeks.length < 2;
-    $("#hwTitle").innerHTML = 'การบ้าน<span class="nw">สัปดาห์ที่ ' + wk.week + '</span> <span class="nw">' + esc(hwRange(wk.from, wk.to)) + "</span>";
+    $("#hwTitle").innerHTML = 'การบ้าน<span class="nw">สัปดาห์ที่ ' + esc(wk.label || wk.week) + '</span> <span class="nw">' + esc(hwRange(wk.from, wk.to)) + "</span>";
     var items = wk.items || [], done = items.filter(function (x, i) { return hwGet(hwKey(wk.week, i)); }).length;
     var subj = []; items.forEach(function (x) { if (subj.indexOf(x.subj) < 0) subj.push(x.subj); });
     var team = items.filter(function (x) { return x.mode === "pair" || x.mode === "group"; }).length, pct = items.length ? Math.round(done / items.length * 100) : 0;
