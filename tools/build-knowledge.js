@@ -130,7 +130,7 @@ function build() {
   h("การบ้านประจำสัปดาห์");
   L.push(`สรุปโดย ${HW.by || "ฝ่ายวิชาการของห้อง"} ทุกสัปดาห์ ดูบนเว็บที่ #homework นักเรียนติ๊กงานที่ทำเสร็จได้ในเครื่องของตัวเอง กำหนดส่งและรายละเอียดงานให้ยึดตามที่ครูผู้สอนแจ้ง`);
   (HW.weeks || []).slice().sort((a, b) => b.week - a.week).forEach((wk) => {
-    L.push("", `## การบ้านสัปดาห์ที่ ${wk.week} ภาคเรียน ${HW.term || S.term} (${thDate(wk.from, true)} ถึง ${thDate(wk.to, true)}) ลิงก์ #hw=${wk.week}`);
+    L.push("", `## การบ้านสัปดาห์ที่ ${wk.label || wk.week} ภาคเรียน ${HW.term || S.term} (${thDate(wk.from, true)} ถึง ${thDate(wk.to, true)}) ลิงก์ #hw=${wk.week}`);
     if (wk.note) L.push(clean(wk.note));
     (wk.items || []).forEach((x) => L.push(`- ${x.subj} (${x.teacher}): ${x.task}${x.mode === "pair" ? " · งานคู่" : x.mode === "group" ? " · งานกลุ่ม" + (x.size ? " " + x.size + " คน" : "") : x.mode === "solo" ? " · งานเดี่ยว" : ""} · ${x.due ? "กำหนดส่ง " + thDate(x.due, true) : "กำหนดส่งตามที่ครูผู้สอนแจ้ง"}`));
   });
