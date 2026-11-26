@@ -179,6 +179,7 @@ window.M54_SITE = {
   calendar: [
     { date: "2026-10-26", end: "2026-11-11", title: "ใช้ตารางเรียนที่ 2 (คาบละ 40 นาที) เรียนเสร็จแล้วไปทำกิจกรรมคณะสี", cat: "schedule", time: "", place: "" },
     { date: "2026-11-12", end: "2026-11-13", title: "กีฬาสี \"บุนนาคเกม\" วันแข่งใหญ่: แข่งเชียร์ กีฬารอบตัดสิน และกรีฑา", cat: "house", time: "", place: "โรงเรียนพรตพิทยพยัต" },
+    { date: "2026-11-26", end: "", title: "ประชุมระดับ ม.5: ข้อควรรู้จากกลุ่มบริหารงานวิชาการ (GPAX พอร์ต TCAS เกณฑ์จบ เวลาเรียน)", cat: "event", time: "คาบประชุมระดับ", place: "ลานโดม", news: "2569-11-26-m5-academic-tips" },
     /* ปฏิทินวิชาการ ภาคเรียนที่ 2/2569 ฉบับทางการ (ข่าว 2569-11-08-academic-calendar) */
     { date: "2026-10-23", end: "", title: "วันปิยมหาราช", cat: "schedule", time: "", place: "", news: "2569-11-08-academic-calendar" },
     { date: "2026-10-27", end: "", title: "สำรวจยืนยันตัวตนนักเรียน (งานทะเบียน)", cat: "event", time: "", place: "", news: "2569-11-08-academic-calendar" },
@@ -193,6 +194,8 @@ window.M54_SITE = {
     { date: "2026-12-07", end: "", title: "หยุดชดเชยวันพ่อแห่งชาติ", cat: "schedule", time: "", place: "", news: "2569-11-08-academic-calendar" },
     { date: "2026-12-09", end: "2026-12-11", title: "ค่ายภาษาไทย (กลุ่มสาระฯ ภาษาไทย)", cat: "event", time: "", place: "", news: "2569-11-08-academic-calendar" },
     { date: "2026-12-10", end: "", title: "วันรัฐธรรมนูญ", cat: "schedule", time: "", place: "", news: "2569-11-08-academic-calendar" },
+    { date: "2026-12-11", end: "", title: "กิจกรรม BKK2 (กลุ่มบริหารวิชาการ)", cat: "event", time: "", place: "", news: "2569-11-08-academic-calendar" },
+    { date: "2026-12-14", end: "", title: "กิจกรรมสื่อสัมพันธ์เพื่อลูกรัก รอบ 2 (กลุ่มบริหารงานบุคคล) รายละเอียดรอโรงเรียนแจ้ง", cat: "event", time: "", place: "", news: "2569-11-08-academic-calendar" },
     { date: "2026-12-16", end: "", title: "วันหยุดราชการ พิธีถวายพระเพลิงพระบรมศพ (สมเด็จพระบรมราชชนนีพันปีหลวง)", cat: "schedule", time: "", place: "", news: "2569-11-08-academic-calendar" },
     { date: "2026-12-22", end: "", title: "กิจกรรมวันคริสต์มาส (กลุ่มสาระฯ ภาษาต่างประเทศ)", cat: "event", time: "", place: "", news: "2569-11-08-academic-calendar" },
     { date: "2026-12-28", end: "2026-12-30", title: "ปิดสถานศึกษากรณีพิเศษ", cat: "schedule", time: "", place: "", news: "2569-11-08-academic-calendar" },
@@ -204,7 +207,8 @@ window.M54_SITE = {
     { date: "2027-01-08", end: "", title: "กิจกรรมวันเด็กแห่งชาติ (วันเด็กแห่งชาติตรงกับ ส. 9 ม.ค.)", cat: "event", time: "", place: "", news: "2569-11-08-academic-calendar" },
     { date: "2027-01-15", end: "", title: "ปิดช่วงเรียนซ้ำ ครั้งที่ 2 (ครูประจำวิชาส่งผล)", cat: "exam", time: "", place: "", news: "2569-11-08-academic-calendar" },
     { date: "2027-01-16", end: "", title: "วันครู", cat: "schedule", time: "", place: "", news: "2569-11-08-academic-calendar" },
-    { date: "2027-01-24", end: "", title: "กิจกรรม PROT Pre-Test (กลุ่มบริหารวิชาการ)", cat: "event", time: "", place: "", news: "2569-11-08-academic-calendar" },
+    { date: "2027-01-22", end: "", title: "การแข่งขันศิลปหัตถกรรมนักเรียน ภาษาฝรั่งเศส (กลุ่มสาระฯ ภาษาต่างประเทศ)", cat: "event", time: "", place: "", news: "2569-11-08-academic-calendar" },
+    { date: "2027-01-23", end: "", title: "กิจกรรม PROT Pre-Test (กลุ่มบริหารวิชาการ) เลื่อนจาก อา. 24 ม.ค.", cat: "event", time: "", place: "", news: "2569-11-08-academic-calendar" },
     { date: "2027-01-27", end: "", title: "กิจกรรมเปิดบ้านวิชาการ “พรตนิทรรศ”", cat: "event", time: "", place: "", news: "2569-11-08-academic-calendar" },
     { date: "2027-02-04", end: "", title: "วันตรุษจีน (กลุ่มสาระฯ ภาษาต่างประเทศ)", cat: "event", time: "", place: "", news: "2569-11-08-academic-calendar" },
     { date: "2027-02-05", end: "", title: "ส่งรายชื่อนักเรียนขาดเรียนเกิน 20%", cat: "exam", time: "", place: "", news: "2569-11-08-academic-calendar" },
