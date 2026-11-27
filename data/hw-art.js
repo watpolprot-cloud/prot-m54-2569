@@ -173,6 +173,61 @@ window.M54_HW_ART = {
     '<path d="M16 28h50l12 12v70H16z" /><path d="M66 28v12h12" />' +
     '<rect x="26" y="50" width="10" height="10" rx="2" /><path d="M28 55l2 3 5-6M42 55h26" /><rect x="26" y="70" width="10" height="10" rx="2" /><path d="M42 75h26" opacity=".8" /><rect x="26" y="90" width="10" height="10" rx="2" /><path d="M42 95h18" opacity=".8" />' +
     '<path d="M104 54l7 6-18 36-9 4 1-9z" /><path d="M99 62l7 6" opacity=".7" /></g>',
+  /* จับกลุ่มทำเกมจากหมวดสำนวน: ลูกเต๋า กระดานเกมเป็นช่อง และกล่องคำพูด */
+  idiomgame: '<g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
+    '<rect x="10" y="84" width="18" height="18" rx="3" /><rect x="30" y="84" width="18" height="18" rx="3" /><rect x="50" y="84" width="18" height="18" rx="3" /><rect x="50" y="64" width="18" height="18" rx="3" /><rect x="70" y="64" width="18" height="18" rx="3" /><rect x="90" y="64" width="18" height="18" rx="3" />' +
+    '<path d="M96 76l3-6 3 6" opacity=".8" /><path d="M14 94l6-4v8z" fill="currentColor" fill-opacity=".3" />' +
+    '<g transform="rotate(-12 30 36)"><rect x="12" y="18" width="36" height="36" rx="7" /><circle cx="22" cy="28" r="2.6" fill="currentColor" /><circle cx="30" cy="36" r="2.6" fill="currentColor" /><circle cx="38" cy="44" r="2.6" fill="currentColor" /></g>' +
+    '<path d="M66 10h38a6 6 0 0 1 6 6v20a6 6 0 0 1-6 6H86l-10 9v-9H66a6 6 0 0 1-6-6V16a6 6 0 0 1 6-6z" /><circle cx="74" cy="26" r="2.2" fill="currentColor" /><circle cx="85" cy="26" r="2.2" fill="currentColor" /><circle cx="96" cy="26" r="2.2" fill="currentColor" /></g>',
+  /* ประดิษฐ์พวงหรีดคริสต์มาส: วงใบไม้ ผลเบอร์รี และโบว์ */
+  /* ประดิษฐ์พวงหรีดคริสต์มาส: วงใบไม้ ผลเบอร์รี และโบว์ */
+  wreath: '<g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
+    '<ellipse cx="85.0" cy="52.0" rx="9" ry="4.5" transform="rotate(65 85.0 52.0)" fill="currentColor" fill-opacity=".18" /><ellipse cx="87.7" cy="63.5" rx="9" ry="4.5" transform="rotate(138 87.7 63.5)" fill="currentColor" fill-opacity=".18" /><ellipse cx="77.7" cy="69.7" rx="9" ry="4.5" transform="rotate(110 77.7 69.7)" fill="currentColor" fill-opacity=".18" /><ellipse cx="71.5" cy="79.7" rx="9" ry="4.5" transform="rotate(182 71.5 79.7)" fill="currentColor" fill-opacity=".18" /><ellipse cx="60.0" cy="77.0" rx="9" ry="4.5" transform="rotate(155 60.0 77.0)" fill="currentColor" fill-opacity=".18" /><ellipse cx="48.5" cy="79.7" rx="9" ry="4.5" transform="rotate(228 48.5 79.7)" fill="currentColor" fill-opacity=".18" /><ellipse cx="42.3" cy="69.7" rx="9" ry="4.5" transform="rotate(200 42.3 69.7)" fill="currentColor" fill-opacity=".18" /><ellipse cx="32.3" cy="63.5" rx="9" ry="4.5" transform="rotate(272 32.3 63.5)" fill="currentColor" fill-opacity=".18" /><ellipse cx="35.0" cy="52.0" rx="9" ry="4.5" transform="rotate(245 35.0 52.0)" fill="currentColor" fill-opacity=".18" /><ellipse cx="32.3" cy="40.5" rx="9" ry="4.5" transform="rotate(318 32.3 40.5)" fill="currentColor" fill-opacity=".18" /><ellipse cx="42.3" cy="34.3" rx="9" ry="4.5" transform="rotate(290 42.3 34.3)" fill="currentColor" fill-opacity=".18" /><ellipse cx="48.5" cy="24.3" rx="9" ry="4.5" transform="rotate(362 48.5 24.3)" fill="currentColor" fill-opacity=".18" /><ellipse cx="60.0" cy="27.0" rx="9" ry="4.5" transform="rotate(335 60.0 27.0)" fill="currentColor" fill-opacity=".18" /><ellipse cx="71.5" cy="24.3" rx="9" ry="4.5" transform="rotate(408 71.5 24.3)" fill="currentColor" fill-opacity=".18" /><ellipse cx="77.7" cy="34.3" rx="9" ry="4.5" transform="rotate(380 77.7 34.3)" fill="currentColor" fill-opacity=".18" /><ellipse cx="87.7" cy="40.5" rx="9" ry="4.5" transform="rotate(452 87.7 40.5)" fill="currentColor" fill-opacity=".18" />' +
+    '<circle cx="73.5" cy="28.6" r="3" fill="currentColor" /><circle cx="42.6" cy="31.3" r="3" fill="currentColor" /><circle cx="86.6" cy="47.3" r="3" fill="currentColor" /><circle cx="34.6" cy="42.8" r="3" fill="currentColor" /><circle cx="34.6" cy="61.2" r="3" fill="currentColor" /><circle cx="85.4" cy="61.2" r="3" fill="currentColor" />' +
+    '<path d="M60 88l-18-10v20zM60 88l18-10v20z" fill="currentColor" fill-opacity=".2" /><circle cx="60" cy="88" r="4" fill="currentColor" />' +
+    '<path d="M56 92l-9 20M64 92l9 20" />' +
+    '<path d="M104 10l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" opacity=".85" /></g>',
+  qtag: '<g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M16 12h66a8 8 0 0 1 8 8v32a8 8 0 0 1-8 8H44l-14 12V60H16a8 8 0 0 1-8-8V20a8 8 0 0 1 8-8z" />' +
+    '<path d="M20 28h44M20 42h26" opacity=".7" /><path d="M52 42h12" />' +
+    '<path d="M66 76h30l14 16-14 16H66z" /><circle cx="100" cy="92" r="2.5" />' +
+    '<path d="M76 86a5.5 5.5 0 1 1 7 5.3v3.2" /><circle cx="83" cy="101" r="1.8" fill="currentColor" /></g>',
+  /* เตรียมสารละลายคนละ 1 สาร: บีกเกอร์ หลอดทดลอง และหยดสาร */
+  solution: '<g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M34 40h52M40 40v52c0 8 6 14 14 14h12c8 0 14-6 14-14V40" /><path d="M40 72c12-5 26 5 40 0" opacity=".8" /><circle cx="54" cy="86" r="3" /><circle cx="66" cy="94" r="2" fill="currentColor" />' +
+    '<path d="M60 12c-5 7-7 11-7 14a7 7 0 0 0 14 0c0-3-2-7-7-14z" />' +
+    '<path d="M10 22h22M14 22v60a7 7 0 0 0 14 0V22" /><path d="M14 60h14" opacity=".7" />' +
+    '<path d="M88 22h22M92 22v60a7 7 0 0 0 14 0V22" /><path d="M92 52h14" opacity=".7" /></g>',
+  /* สอบหลังเลิกเรียน: กระดาษคำตอบแบบฝน และนาฬิกา */
+  exam: '<g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
+    '<rect x="12" y="12" width="62" height="88" rx="5" /><path d="M22 22h30" opacity=".7" />' +
+    '<circle cx="28" cy="34" r="4" /><circle cx="40" cy="34" r="4" fill="currentColor" /><circle cx="52" cy="34" r="4" /><circle cx="64" cy="34" r="4" /><circle cx="28" cy="48" r="4" /><circle cx="40" cy="48" r="4" /><circle cx="52" cy="48" r="4" fill="currentColor" /><circle cx="64" cy="48" r="4" /><circle cx="28" cy="62" r="4" fill="currentColor" /><circle cx="40" cy="62" r="4" /><circle cx="52" cy="62" r="4" /><circle cx="64" cy="62" r="4" /><circle cx="28" cy="76" r="4" /><circle cx="40" cy="76" r="4" /><circle cx="52" cy="76" r="4" /><circle cx="64" cy="76" r="4" fill="currentColor" />' +
+    '<path d="M22 90h22" opacity=".6" />' +
+    '<circle cx="92" cy="88" r="20" fill-opacity="0" /><path d="M92 76v12l8 6" /><path d="M86 62h12M92 62v6" /></g>',
+  /* ชีทลำดับและอนุกรม: จุดที่เพิ่มขึ้นทีละแถว และสัญลักษณ์ซิกมา */
+  sequence: '<g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
+    '<circle cx="16" cy="102" r="5" /><circle cx="32" cy="102" r="5" /><circle cx="32" cy="88" r="5" /><circle cx="48" cy="102" r="5" /><circle cx="48" cy="88" r="5" /><circle cx="48" cy="74" r="5" /><circle cx="64" cy="102" r="5" /><circle cx="64" cy="88" r="5" /><circle cx="64" cy="74" r="5" /><circle cx="64" cy="60" r="5" />' +
+    '<circle cx="82" cy="102" r="2" fill="currentColor" /><circle cx="92" cy="102" r="2" fill="currentColor" /><circle cx="102" cy="102" r="2" fill="currentColor" />' +
+    '<path d="M108 14H80l15 19-15 19h28" />' +
+    '<path d="M16 72c6-24 24-44 52-52" opacity=".6" /><path d="M60 16l8 4-5 7" opacity=".6" /></g>',
+  /* ราคาดุลยภาพและปริมาณดุลยภาพ: กราฟอุปสงค์อุปทานตัดกัน และเส้นที่เลื่อน */
+  supplydemand: '<g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M18 10v92h92" />' +
+    '<path d="M28 24l70 66M28 90l70-66" />' +
+    '<path d="M46 20l64 60" stroke-dasharray="5 7" opacity=".7" /><path d="M76 30h14M86 26l4 4-4 4" />' +
+    '<path d="M63 57H18M63 57v45" stroke-dasharray="3 6" opacity=".6" /><circle cx="63" cy="57" r="4" fill="currentColor" /></g>',
+  /* แบบทดสอบมารยาทนานาชาติและวัฒนธรรมไทย: ลูกโลก มือไหว้ และช่องติ๊ก */
+  etiquette: '<g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
+    '<circle cx="36" cy="36" r="24" /><path d="M12 36h48M36 12c-10 8-10 40 0 48M36 12c10 8 10 40 0 48" opacity=".85" />' +
+    '<path d="M84 30c-5 4-9 14-10 26l-2 20c-1 8 0 15 2 22M84 30c5 4 9 14 10 26l2 20c1 8 0 15-2 22M84 30v68" /><path d="M76 74c2-6 5-9 8-9M92 74c-2-6-5-9-8-9" opacity=".8" /><path d="M70 98h28v12H70z" />' +
+    '<rect x="16" y="78" width="30" height="28" rx="4" /><path d="M23 92l5 5 10-11" />' +
+    '<path d="M84 12v8M70 18l4 6M98 18l-4 6" opacity=".8" /></g>',
+  /* ใบงานผู้จัดการข้อมูล: แฟ้มข้อมูล ฐานข้อมูล และเฟืองจัดการ */
+  datamgr: '<g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M10 56h26l6 8h48v42H10z" /><path d="M22 80h44M22 92h30" opacity=".7" />' +
+    '<ellipse cx="34" cy="20" rx="20" ry="7" /><path d="M14 20v20c0 4 9 7 20 7s20-3 20-7V20M14 30c0 4 9 7 20 7s20-3 20-7" />' +
+    '<circle cx="94" cy="28" r="12" /><circle cx="94" cy="28" r="4.5" /><path d="M106.0 28.0L111.0 28.0M102.5 36.5L106.0 40.0M94.0 40.0L94.0 45.0M85.5 36.5L82.0 40.0M82.0 28.0L77.0 28.0M85.5 19.5L82.0 16.0M94.0 16.0L94.0 11.0M102.5 19.5L106.0 16.0" />' +
+    '<path d="M94 50v14c0 6-4 10-10 10h-4M86 70l-6 4 6 4" opacity=".7" /></g>',
   /* สำรอง: สมุดงานทั่วไป */
   general: '<g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
     '<rect x="26" y="16" width="68" height="88" rx="6" /><path d="M46 16v-4h28v4" /><path d="M40 44l6 6 10-12M40 66l6 6 10-12" />' +
@@ -190,5 +245,6 @@ window.M54_HW_TONES = {
   "เศรษฐศาสตร์": ["#5c1d1d", "#a33b2f"],
   "วอลเลย์บอล 2": ["#103a73", "#1a8ad1"],
   "เคมี": ["#0b4a5e", "#1ba3a8"],
-  "ชีววิทยา": ["#1d5230", "#3fa35a"]
+  "ชีววิทยา": ["#1d5230", "#3fa35a"],
+  "คณิตศาสตร์พื้นฐาน": ["#20404f", "#3f7f8f"]
 };

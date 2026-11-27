@@ -15,6 +15,25 @@ window.M54_HW = {
   by: "สุภาพร พงษ์ศา หัวหน้าฝ่ายวิชาการของห้อง ม.5/4",
   weeks: [
     {
+      week: 5, from: "2026-11-23", to: "2026-11-27", posted: "2026-11-27",
+      image: "docs/2569/hw/hw-2569-2-w05.jpg",
+      note: "",
+      items: [
+        { subj: "ภาษาไทย", teacher: "ครูอาคม", task: "ทำเกมจากหมวดสำนวนที่เลือก", art: "idiomgame", mode: "group", size: 5, due: "" },
+        { subj: "ภาษาอังกฤษ", teacher: "ครูสุพัตรา", task: "ประดิษฐ์ Christmas wreath", art: "wreath", mode: "group", due: "" },
+        { subj: "ภาษาอังกฤษ", teacher: "ครูสุพัตรา", task: "แบบฝึกหัดหัวข้อที่ 9, 10 หน้า 47", art: "workbook", mode: "", due: "" },
+        { subj: "ภาษาอังกฤษ", teacher: "ครูสุพัตรา", task: "จด question tag", art: "qtag", mode: "", due: "" },
+        { subj: "เคมี", teacher: "ครูสุดสาคร", task: "เตรียมสารละลายมา คนละ 1 สาร ห้ามซ้ำกัน", note: "นำมาวันจันทร์ที่ 30 พ.ย.", art: "solution", mode: "", due: "2026-11-30" },
+        { subj: "เคมี", teacher: "ครูสุดสาคร", task: "สอบหลังเลิกเรียน", note: "วันและเวลาสอบให้ยึดตามที่ครูผู้สอนแจ้ง", art: "exam", mode: "", due: "" },
+        { subj: "คณิตศาสตร์พื้นฐาน", teacher: "ครูธวัชชัย", task: "ส่งชีทเรื่องลำดับและอนุกรม", art: "sequence", mode: "", due: "" },
+        { subj: "คณิตศาสตร์เพิ่มเติม", teacher: "ครูศจินันท์", task: "ส่งใบกิจกรรมที่ 6, 7", art: "mathsheet", mode: "", due: "" },
+        { subj: "เศรษฐศาสตร์", teacher: "ครูธีรวัฒน์", task: "จดงานที่ 5 การเปลี่ยนแปลงของราคาดุลยภาพ และปริมาณดุลยภาพ", art: "supplydemand", mode: "", due: "" },
+        { subj: "ภาษาอังกฤษเพื่อการสื่อสาร", teacher: "ครู Karl Patrick Soriano", task: "Worksheet S2P6-1", art: "sheets", mode: "", due: "" },
+        { subj: "ภาษาอังกฤษเพื่อการท่องเที่ยว", teacher: "ครูพรนภา", task: "ทำแบบทดสอบมารยาทนานาชาติ และประเพณีวัฒนธรรมไทย", art: "etiquette", mode: "", due: "" },
+        { subj: "วิทยาการคำนวณ", teacher: "ครูบังอร", task: "ใบงานที่ 4 ผู้จัดการข้อมูล", art: "datamgr", mode: "", due: "" }
+      ]
+    },
+    {
       week: 4, label: "3–4", from: "2026-11-09", to: "2026-11-20", posted: "2026-11-20",
       image: "docs/2569/hw/hw-2569-2-w03-04.jpg",
       note: "",
